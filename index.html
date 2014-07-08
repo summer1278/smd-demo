@@ -173,7 +173,11 @@
         
 
       });
-      
+      // try get json
+      $.getJSON( "/audio/test.json", function( data ) {
+		  var cfa = data;
+	  });
+ 
       $("#zoomIn").on("click", window.peaks.zoom.zoomIn);
       $("#zoomOut").on("click", window.peaks.zoom.zoomOut);
       $("#segment").on("click", function (event) {
