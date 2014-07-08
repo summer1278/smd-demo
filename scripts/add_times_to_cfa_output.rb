@@ -29,9 +29,9 @@ file.each_line do |line|
   
   #say speech is red, music is green.
   if number == 1 
-	color = 'red'
+	color =  'rgba(215, 40, 40, 0.9)' # red
   else
-	color = 'green'
+	color = 'rgba(75, 213, 44, 0.9)' # green
   end
 
   #hash
@@ -49,4 +49,3 @@ file.each_line do |line|
 end
 
 p list
-
