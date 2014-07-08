@@ -40,7 +40,7 @@ file.each_line do |line|
   data[ 'endTime' ] = time_in_sec
   data[ 'id' ] = "segment#{line_num.to_i}"
   data[ 'overview' ] = 'Kinetic.Group'
-  data[ 'startTime' ] = time_in_sec - 2.6 #overlapped, need fix
+  data[ 'startTime' ] = time_in_sec - 2.6 # overlapped, need fix
   data[ 'zoom' ] = 'Kinetic.Group'
   
   #add hash to array
