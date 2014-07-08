@@ -29,25 +29,28 @@ file.each_line do |line|
   
   #say speech is red, music is green.
   if number == 1 
-	color =  'rgba(215, 40, 40, 0.9)' # red
+	color = 'rgba(215, 40, 40, 0.9)' # red
   else
 	color = 'rgba(75, 213, 44, 0.9)' # green
   end
 
   #hash
-  data[ 'color' ] = color
-  data[ 'editable' ] = 'true'
-  data[ 'endTime' ] = time_in_sec
-  data[ 'id' ] = "segment#{line_num.to_i}"
-  data[ 'overview' ] = 'Kinetic.Group'
-  data[ 'startTime' ] = time_in_sec - 2.6 # overlapped, need fix
-  data[ 'zoom' ] = 'Kinetic.Group'
+  data[ :color ] = color
+  data[ :editable ] = true
+  data[ :endTime ] = time_in_sec
+  data[ :id ] = 'segment#{line_num.to_i}'
+  data[ :overview ] = 'Kinetic.Group'
+  data[ :startTime ] = time_in_sec - 2.6 #overlapped, need fix
+  data[ :zoom ] = 'Kinetic.Group'
   
   #add hash to array
   list<<data
   
 end
 
-p list
+#p list
 
-@segments = list
+File.open("test.json","w") do |f|
+  f.write(list.to_json)
+end
+
