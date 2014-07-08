@@ -7,5 +7,7 @@ speech music discriminator for BBC subititle tool, cooperated with BBC R&amp;D, 
 test js
 -----------
 Ubuntu
+
 >apt-get install rhino
+
 >rhino yourjs.js
