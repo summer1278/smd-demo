@@ -1,7 +1,9 @@
 smd-demo
 ========
+Supported by UCL CS & BBC R&amp;D, MSc Project in 2014 Summer 
 
-speech music discriminator for BBC subititle tool, cooperated with BBC R&amp;D, MSc Project in 2014 Summer 
+1.Visualization of speech music discriminator for BBC subititle tool,
+
 
 
 test js
