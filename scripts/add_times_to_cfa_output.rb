@@ -49,3 +49,5 @@ file.each_line do |line|
 end
 
 p list
+
+@segments = list
