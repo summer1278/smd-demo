@@ -50,7 +50,7 @@ end
 
 #p list
 
-File.open("test.json","w") do |f|
+File.open("./audio/test.json","w") do |f|
   f.write(list.to_json)
 end
 
