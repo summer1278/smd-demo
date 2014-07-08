@@ -151,9 +151,10 @@
         overviewWaveformColor: 'rgba(0,0,0,0.2)', // Colour for the overview waveform
         segmentColor: 'rgba(255, 161, 39, 1)', // Colour for segments on the waveform
         randomizeSegmentColor: true, // Random colour per segment (overrides segmentColor)
-
-        /**
-         * ADD SEGMENTS BY PARSONG JSON FROM CFA OUTPUT
+		
+		
+		//segments: 'audio/test.json'
+        //ADD SEGMENTS BY PARSING JSON FROM CFA OUTPUT
         segments: [{
           startTime: 63.0,
           endTime: 125.5,
@@ -168,11 +169,11 @@
           color: "#E7003E",
           labelText: "Chapter: Reptiles"
         }]
-
-        */
+		
+        
 
       });
-
+      
       $("#zoomIn").on("click", window.peaks.zoom.zoomIn);
       $("#zoomOut").on("click", window.peaks.zoom.zoomOut);
       $("#segment").on("click", function (event) {

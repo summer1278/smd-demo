@@ -35,13 +35,20 @@ file.each_line do |line|
   end
 
   #hash
-  data[ :color ] = color
-  data[ :editable ] = true
-  data[ :endTime ] = time_in_sec
-  data[ :id ] = 'segment#{line_num.to_i}'
-  data[ :overview ] = 'Kinetic.Group'
   data[ :startTime ] = time_in_sec - 2.6 #overlapped, need fix
-  data[ :zoom ] = 'Kinetic.Group'
+  data[ :endTime ] = time_in_sec
+  data[ :editable ] = true
+  data[ :color ] = color
+  data[ :labelText ] = 'segment#{line_num.to_i}'
+
+  
+  #data[ :color ] = color
+  #data[ :editable ] = true
+  #data[ :endTime ] = time_in_sec
+  #data[ :id ] = 'segment#{line_num.to_i}'
+  #data[ :overview ] = 'Kinetic.Group'
+  #data[ :startTime ] = time_in_sec - 2.6 #overlapped, need fix
+  #data[ :zoom ] = 'Kinetic.Group'
   
   #add hash to array
   list<<data
