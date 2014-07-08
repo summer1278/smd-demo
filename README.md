@@ -2,14 +2,14 @@ smd-demo
 ========
 Supported by UCL CS & BBC R&amp;D, MSc Project in 2014 Summer 
 
-1.Visualization of speech music discriminator for BBC subititle tool,
+1.Visualization of speech music discriminator for BBC subititle tool
 
 
 
-test js
+Json File Attributes
 -----------
-Ubuntu
-
->apt-get install rhino
-
->rhino yourjs.js
+1. startTime
+2. endTime
+3. editable
+4. color: waveform color
+5. labelText: id of segment
