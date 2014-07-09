@@ -1,0 +1,23 @@
+{
+  "name": "peaks.js",
+  "version": "0.3.0-beta.2",
+  "main": "src/main.js",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt",
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "test_data"
+  ],
+  "dependencies": {
+    "KineticJS": "http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v4.5.5.min.js",
+    "eventEmitter": "~4.2.1",
+    "waveform-data": "~1.4.0",
+    "almond": "~0.2.9"
+  },
+  "devDependencies": {
+    "requirejs": "~2.1.14"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "name": "waveform-data",
+  "version": "1.4.0",
+  "description": "Audio Waveform Data Manipulation API – resample, offset and segment waveform data in JavaScript.",
+  "main": "waveform-data.js",
+  "homepage": "https://github.com/bbcrd/waveform-data.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "npm run test-node && npm run jshint && npm run code-coverage && npm run test-browser",
+    "jshint": "jshint -c .jshintrc ./lib",
+    "test-node": "mocha --reporter dot test/unit/*",
+    "test-watch": "mocha --reporter dot --watch test/unit/* --browsers Chrome",
+    "code-coverage": "mocha --require blanket --reporter html-cov test/unit/* > dist/code-coverage.html",
+    "test-browser": "./node_modules/karma/bin/karma start",
+    "build": "npm run build-browser",
+    "build-browser": "browserify -r ./waveform-data.js -s WaveformData > dist/waveform-data.js && grunt uglify"
+  },
+  "config": {
+    "blanket": {
+      "pattern": "waveform-data.js/lib/"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bbcrd/waveform-data.js.git"
+  },
+  "keywords": [
+    "webaudio",
+    "waveform",
+    "audio",
+    "visualisation"
+  ],
+  "author": "Thomas Parisot <thomas.parisot@bbc.co.uk>",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/bbcrd/waveform-data.js/issues"
+  },
+  "testling": {
+    "files": "test/unit/*.js",
+    "harness": "mocha-bdd",
+    "browsers": [
+      "ie/9..10",
+      "ff/latest..nightly",
+      "chrome/latest..canary",
+      "opera/latest..next",
+      "safari/latest",
+      "ipad/latest",
+      "android/latest"
+    ]
+  },
+  "devDependencies": {
+    "blanket": "~1.1.5",
+    "browserify": "~2.34.0",
+    "chai": "^1.9.1",
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-jsdoc-md": "git+https://github.com/oncletom/grunt-jsdoc-md.git",
+    "jshint": "^2.5.1",
+    "karma": "^0.12.16",
+    "karma-browserify": "~0.0.5",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "~0.1.0",
+    "karma-firefox-launcher": "~0.1.0",
+    "karma-html2js-preprocessor": "~0.1.0",
+    "karma-mocha": "^0.1.4",
+    "karma-phantomjs-launcher": "~0.1.0",
+    "karma-safari-launcher": "~0.1.1",
+    "mocha": "^1.20.1",
+    "testling": "^1.6.1"
+  }
+}
