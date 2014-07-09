@@ -1,4 +1,5 @@
 require 'json'
+require 'pp'
 
 def num_mfcc_frames_in_cfa_frames( num_cfa_frames, block_size, step_size )
   block_size + ( num_cfa_frames - 1 ) * step_size
@@ -44,7 +45,7 @@ file.each_line do |line|
   
 end
 
-#p list
+#p list.to_json
 
 File.open("./audio/test.json","w") do |f|
   f.write(list.to_json)

@@ -152,13 +152,9 @@
         segmentColor: 'rgba(255, 161, 39, 1)', // Colour for segments on the waveform
         randomizeSegmentColor: true, // Random colour per segment (overrides segmentColor)
 		
-		$.getJSON('audio/test.json', function(data) {
-			var obj = JSON.parse(data);
-		});
-		segments: obj
 		
-	
-	
+		
+		
         //ADD SEGMENTS BY PARSING JSON FROM CFA OUTPUT
         /*
         segments: [{
@@ -179,6 +175,13 @@
         
 
       });
+ 
+      $.getJSON('audio/test.json', function(data) {
+			//var obj = jQuery.parseJSON(data);
+			alert( data[0].labelText =='segment1');
+		});
+		
+		
  /*     
 $.getJSON('audio/test.json', function(data) {
         for (var i in data) {
