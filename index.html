@@ -152,12 +152,15 @@
         segmentColor: 'rgba(255, 161, 39, 1)', // Colour for segments on the waveform
         randomizeSegmentColor: true, // Random colour per segment (overrides segmentColor)
 		
+		$.getJSON('audio/test.json', function(data) {
+			var obj = JSON.parse(data);
+		});
+		segments: obj
 		
-		//segments: 'audio/test.json'
 	
 	
         //ADD SEGMENTS BY PARSING JSON FROM CFA OUTPUT
-        
+        /*
         segments: [{
           startTime: 63.0,
           endTime: 125.5,
@@ -171,21 +174,18 @@
           editable: true,
           color: "rgba(0, 225, 128, 1)",
           labelText: "Chapter: Reptiles"
-        }]
+        }]*/
 		
         
 
       });
-      
+ /*     
 $.getJSON('audio/test.json', function(data) {
-        var output="<ul>";
         for (var i in data) {
-            output+="<li>" + data[i].endTime + " " + data[i].startTime+"</li>";
+            output+= data[i].endTime + " " + data[i].startTime;
         }
-
-        output+="</ul>";
-        
-  });
+        html.push(output);
+  });*/
       $("#zoomIn").on("click", window.peaks.zoom.zoomIn);
       $("#zoomOut").on("click", window.peaks.zoom.zoomOut);
       $("#segment").on("click", function (event) {
