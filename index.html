@@ -132,7 +132,8 @@
   <script src="http://waveform.prototyping.bbc.co.uk/peaks/peaks.min.js" type="text/javascript"></script>
 
   <script>
-
+	
+		
     $(function () {
       window.peaks.init({
         /** REQUIRED OPTIONS **/
@@ -151,11 +152,6 @@
         overviewWaveformColor: 'rgba(0,0,0,0.2)', // Colour for the overview waveform
         segmentColor: 'rgba(255, 161, 39, 1)', // Colour for segments on the waveform
         randomizeSegmentColor: true, // Random colour per segment (overrides segmentColor)
-		
-		
-		
-		
-        //ADD SEGMENTS BY PARSING JSON FROM CFA OUTPUT
         /*
         segments: [{
           startTime: 63.0,
@@ -171,24 +167,24 @@
           color: "rgba(0, 225, 128, 1)",
           labelText: "Chapter: Reptiles"
         }]*/
-		
-        
-
       });
- 
-      $.getJSON('audio/test.json', function(data) {
+      //ADD SEGMENTS BY PARSING JSON FROM CFA OUTPUT
+      var jsonData;
+      $.getJSON('audio/test1.json', function(data) {
 			//var obj = jQuery.parseJSON(data);
-			alert( data[0].labelText =='segment1');
-		});
+			jsonData = data;
+			//alert(jsonData.length);
+	  });
+	  //window.peaks.segments.add(jsonData);
+	  //add one by one  
+	  var len = jsonData.length;
+	  var i;
+	  for( i = 0; i < len ; i++){
+		  window.peaks.segments.add(jsonData[i].startTime,
+			jsonData[i].endTime, jsonData[i].editable);
+	  }
+	  
 		
-		
- /*     
-$.getJSON('audio/test.json', function(data) {
-        for (var i in data) {
-            output+= data[i].endTime + " " + data[i].startTime;
-        }
-        html.push(output);
-  });*/
       $("#zoomIn").on("click", window.peaks.zoom.zoomIn);
       $("#zoomOut").on("click", window.peaks.zoom.zoomOut);
       $("#segment").on("click", function (event) {
