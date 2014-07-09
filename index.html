@@ -176,13 +176,13 @@
 			//alert(jsonData.length);
 	  });
 	  //window.peaks.segments.add(jsonData);
-	  //add one by one  
+	  //add one by one 
+	  
 	  var len = jsonData.length;
 	  var i;
 	  for( i = 0; i < len ; i++){
-		  window.peaks.segments.add(jsonData[i].startTime,
-			jsonData[i].endTime, jsonData[i].editable);
-	  }
+		  window.peaks.segments.addSegment(jsonData[i].startTime, jsonData[i].endTime, jsonData[i].editable);
+	  };
 	  
 		
       $("#zoomIn").on("click", window.peaks.zoom.zoomIn);
