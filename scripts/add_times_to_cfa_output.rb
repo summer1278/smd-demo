@@ -13,8 +13,6 @@ file     = File.open('audio/test.mp3.cfa.csv')
 
 line_num = 0.0
 
-data     = { }
-
 list = [ ]
 
 file.each_line do |line|
@@ -24,7 +22,7 @@ file.each_line do |line|
   num_mfcc    = num_mfcc_frames_in_cfa_frames( line_num, 100.0, 50.0 )
   num_samples = num_samples_in_mfcc_frames( num_mfcc, 1024.0, 256.0 )
   time_in_sec = num_samples / 11025.0
-
+	
   #data[ time_in_sec ] = number
   
   #say speech is red, music is green.
@@ -35,21 +33,12 @@ file.each_line do |line|
   end
 
   #hash
+  data     = { }
   data[ :startTime ] = time_in_sec - 2.6 #overlapped, need fix
   data[ :endTime ] = time_in_sec
   data[ :editable ] = true
   data[ :color ] = color
   data[ :labelText ] = "segment#{line_num.to_i}"
-
-  
-  #data[ :color ] = color
-  #data[ :editable ] = true
-  #data[ :endTime ] = time_in_sec
-  #data[ :id ] = 'segment#{line_num.to_i}'
-  #data[ :overview ] = 'Kinetic.Group'
-  #data[ :startTime ] = time_in_sec - 2.6 #overlapped, need fix
-  #data[ :zoom ] = 'Kinetic.Group'
-  
   #add hash to array
   list<<data
   

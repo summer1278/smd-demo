@@ -154,27 +154,10 @@
 		
 		
 		//segments: 'audio/test.json'
-		//start ajax request
-                $.ajax({
-					type: 'GET',
-                    url: 'audio/test.json',
-                    dataType: 'json',
-                    success: function(data) {
-						console.log(data);
-                        //data downloaded so we call parseJSON function 
-                        //and pass downloaded data
-                        var json = $.parseJSON(data);
-						var output='<ul>';
-						for (var i in json) {							
-							output+="<li>" + json[i].startTime + ", " + json[i].endTime + "</li>";
-						}
-						output+="</ul>";
-						//$('span').html(output);   
-					}
-                });
-		 
+	
+	
         //ADD SEGMENTS BY PARSING JSON FROM CFA OUTPUT
-        /*
+        
         segments: [{
           startTime: 63.0,
           endTime: 125.5,
@@ -186,14 +169,23 @@
           startTime: 225.0,
           endTime: 267.0,
           editable: true,
-          color: "#E7003E",
+          color: "rgba(0, 225, 128, 1)",
           labelText: "Chapter: Reptiles"
         }]
-		*/
+		
         
 
       });
- 
+      
+$.getJSON('audio/test.json', function(data) {
+        var output="<ul>";
+        for (var i in data) {
+            output+="<li>" + data[i].endTime + " " + data[i].startTime+"</li>";
+        }
+
+        output+="</ul>";
+        
+  });
       $("#zoomIn").on("click", window.peaks.zoom.zoomIn);
       $("#zoomOut").on("click", window.peaks.zoom.zoomOut);
       $("#segment").on("click", function (event) {
