@@ -39,7 +39,7 @@ file.each_line do |line|
   data[ :endTime ] = time_in_sec
   data[ :editable ] = true
   data[ :color ] = color
-  data[ :labelText ] = 'segment#{line_num.to_i}'
+  data[ :labelText ] = "segment#{line_num.to_i}"
 
   
   #data[ :color ] = color
