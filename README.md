@@ -8,7 +8,7 @@ Supported by UCL CS & BBC R&amp;D, MSc Project in 2014 Summer
 
 Json File Attributes
 -----------
-1. startTime
+1. startTime: endTime - 2.6 * not correct! overlapped and result first value is negative
 2. endTime
 3. editable
 4. color: waveform color
