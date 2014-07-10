@@ -34,7 +34,7 @@ file.each_line do |line|
   end
 
   #hash
-  data     = { }
+  data = { }
   data[ :startTime ] = time_in_sec - 2.6 #overlapped & first segment starts at < 0, need fix
   data[ :endTime ] = time_in_sec
   data[ :editable ] = true
