@@ -35,7 +35,7 @@ file.each_line do |line|
 
   #hash
   data = { }
-  data[ :startTime ] = time_in_sec - 2.6 #overlapped & first segment starts at < 0, need fix
+  data[ :startTime ] = time_in_sec - 2.3 #overlap 75%, need a offset measurement
   data[ :endTime ] = time_in_sec
   data[ :editable ] = true
   data[ :color ] = color
