@@ -54,7 +54,7 @@ file.each_line do |line|
   temp_end = time_in_sec - time_end_offset # substract offset
   #total_segments = file.to_a.size
   #puts total_segments
-  if line_num == 163
+  if line_num == 1163
 	temp_end = time_in_sec # last: to the end
   end
   
