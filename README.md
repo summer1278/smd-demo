@@ -8,7 +8,7 @@ Supported by UCL CS & BBC R&amp;D, MSc Project in 2014 Summer
 
 Json File Attributes
 -----------
-1. startTime: endTime - 2.3 * gap! offest need to be fixed!
+1. startTime: endTime - time_gap * around 9.8 seconds, 75% overlapped, offset requires!
 2. endTime
 3. editable: false * speed-up
 4. color: waveform color
