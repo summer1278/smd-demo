@@ -9,6 +9,9 @@ def num_samples_in_mfcc_frames( num_mfcc_frames, block_size, step_size )
   block_size + ( num_mfcc_frames - 1 ) * step_size
 end
 
+def time_of_one_window (window_block_size, sample_rate, frame_block_size)
+  window_block_size / sample_rate * frame_block_size
+end
 
 file     = File.open('audio/test.mp3.cfa_2.2.csv') # 2.2 seems to be best fit for this sample
 
@@ -23,6 +26,7 @@ file.each_line do |line|
   num_mfcc    = num_mfcc_frames_in_cfa_frames( line_num, 100.0, 50.0 )
   num_samples = num_samples_in_mfcc_frames( num_mfcc, 1024.0, 512.0 )
   time_in_sec = num_samples / 11025.0
+  time_gap = time_of_one_window(1024.0, 11025.0, 100.0)
 	
   #data[ time_in_sec ] = number
   
@@ -32,10 +36,13 @@ file.each_line do |line|
   else
 	color = 'rgba(75, 213, 44, 0.9)' # green
   end
+  
+  #centralize the frames
+  
 
   #hash
   data = { }
-  data[ :startTime ] = time_in_sec - 2.3 #gap need to be fix
+  data[ :startTime ] = time_in_sec - time_gap #centralize required
   data[ :endTime ] = time_in_sec
   data[ :editable ] = false
   data[ :color ] = color
@@ -45,8 +52,9 @@ file.each_line do |line|
   
 end
 
-pp list
+#pp list
 
+#write json
 File.open("./audio/test.json","w") do |f|
   f.write(list.to_json)
 end
