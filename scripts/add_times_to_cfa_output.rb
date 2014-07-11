@@ -10,7 +10,7 @@ def num_samples_in_mfcc_frames( num_mfcc_frames, block_size, step_size )
 end
 
 
-file     = File.open('audio/test.mp3.cfa.csv')
+file     = File.open('audio/test.mp3.cfa_1.15.csv')
 
 line_num = 0.0
 
@@ -37,7 +37,7 @@ file.each_line do |line|
   data = { }
   data[ :startTime ] = time_in_sec - 2.3 #overlap 75%, need a offset measurement
   data[ :endTime ] = time_in_sec
-  data[ :editable ] = true
+  data[ :editable ] = false
   data[ :color ] = color
   data[ :labelText ] = "segment#{line_num.to_i}"
   #add hash to array
@@ -45,7 +45,7 @@ file.each_line do |line|
   
 end
 
-#p list.to_json
+pp list
 
 File.open("./audio/test.json","w") do |f|
   f.write(list.to_json)

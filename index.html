@@ -216,8 +216,9 @@ require(['peaks'], function (Peaks) {
 	randomizeSegmentColor: true, // Random colour per segment (overrides segmentColor)
   });
   
-  $.getJSON('audio/test3.json', function(data) {
+  $.getJSON('audio/test.json', function(data) {
 	  p.segments.add(data);
+	  //console.log(data.length);
 	});
 	
   $("#zoomIn").on("click", p.zoom.zoomIn);
