@@ -15,6 +15,13 @@ end
 
 file     = File.open('audio/test.mp3.cfa_2.2.csv') # 2.2 seems to be best fit for this sample
 
+# some presits
+time_slot = time_of_one_window(1024.0, 11025.0, 100.0)
+
+time_start_offset = time_slot * 0.25
+
+time_end_offset = time_slot * 0.50
+
 line_num = 0.0
 
 list = [ ]
@@ -26,9 +33,7 @@ file.each_line do |line|
   num_mfcc    = num_mfcc_frames_in_cfa_frames( line_num, 100.0, 50.0 )
   num_samples = num_samples_in_mfcc_frames( num_mfcc, 1024.0, 512.0 )
   time_in_sec = num_samples / 11025.0
-  time_gap = time_of_one_window(1024.0, 11025.0, 100.0)
-	
-  #data[ time_in_sec ] = number
+  
   
   #say music is red, no_music is green.
   if number == 1 
@@ -37,13 +42,24 @@ file.each_line do |line|
 	color = 'rgba(75, 213, 44, 0.9)' # green
   end
   
-  #centralize the frames
-  
 
   #hash
   data = { }
-  data[ :startTime ] = time_in_sec - time_gap #centralize required
-  data[ :endTime ] = time_in_sec
+  
+  temp_start = time_in_sec - time_slot + time_start_offset #add offset
+  if temp_start < 0
+	temp_start =  0 # remove negative start times
+  end
+  
+  temp_end = time_in_sec - time_end_offset # substract offset
+  #total_segments = file.to_a.size
+  #puts total_segments
+  if line_num == 163
+	temp_end = time_in_sec # last: to the end
+  end
+  
+  data[ :startTime ] = temp_start
+  data[ :endTime ] = temp_end
   data[ :editable ] = false
   data[ :color ] = color
   data[ :labelText ] = "segment#{line_num.to_i}"
@@ -52,7 +68,7 @@ file.each_line do |line|
   
 end
 
-#pp list
+pp list
 
 #write json
 File.open("./audio/test.json","w") do |f|
