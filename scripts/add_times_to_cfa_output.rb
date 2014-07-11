@@ -10,7 +10,7 @@ def num_samples_in_mfcc_frames( num_mfcc_frames, block_size, step_size )
 end
 
 
-file     = File.open('audio/test.mp3.cfa_1.15.csv')
+file     = File.open('audio/test.mp3.cfa_2.2.csv') # 2.2 seems to be best fit for this sample
 
 line_num = 0.0
 
@@ -21,12 +21,12 @@ file.each_line do |line|
   line_num = line_num + 1
 
   num_mfcc    = num_mfcc_frames_in_cfa_frames( line_num, 100.0, 50.0 )
-  num_samples = num_samples_in_mfcc_frames( num_mfcc, 1024.0, 256.0 )
+  num_samples = num_samples_in_mfcc_frames( num_mfcc, 1024.0, 512.0 )
   time_in_sec = num_samples / 11025.0
 	
   #data[ time_in_sec ] = number
   
-  #say speech is red, music is green.
+  #say music is red, no_music is green.
   if number == 1 
 	color = 'rgba(215, 40, 40, 0.9)' # red
   else
@@ -35,7 +35,7 @@ file.each_line do |line|
 
   #hash
   data = { }
-  data[ :startTime ] = time_in_sec - 2.3 #overlap 75%, need a offset measurement
+  data[ :startTime ] = time_in_sec - 2.3 #gap need to be fix
   data[ :endTime ] = time_in_sec
   data[ :editable ] = false
   data[ :color ] = color
