@@ -8,9 +8,9 @@ Supported by UCL CS & BBC R&amp;D, MSc Project in 2014 Summer
 
 Json File Attributes
 -----------
-1. startTime: endTime - time_gap * around 9.8 seconds, 75% overlapped, offset requires!
-2. endTime
-3. editable: false * speed-up
+1. startTime: endTime - time_slot //start_offset is + 25% time_slot 
+2. endTime // end_offset is - 50% time_slot
+3. editable: false // speed-up for now, should be true
 4. color: waveform color
 5. labelText: id of segment
 
@@ -24,3 +24,5 @@ Featrue plans used in Ewald's experiments:
 >yaafe.py -r 11025 --resample -f "cfa_1.6: SimpleNoiseGate>ContinuousFrequencyActivation BinThreshold=10 NbPeaks=40>WindowConvolution WCLength=17>SimpleThresholdClassification STCThreshold=1.6" -p Metadata=False audio/test.mp3
 
 >yaafe.py -r 11025 --resample -f "cfa_2.2: SimpleNoiseGate>ContinuousFrequencyActivation BinThreshold=10 NbPeaks=40>WindowConvolution WCLength=17>SimpleThresholdClassification STCThreshold=2.2" -p Metadata=False audio/test.mp3
+
+for current example: cfa2.2 is best fit
