@@ -15,6 +15,9 @@ end
 
 file     = File.open('audio/test.mp3.cfa_2.2.csv') # 2.2 seems to be best fit for this sample
 
+lines    = file.to_a
+total_segments = lines.size
+puts total_segments
 # some presits
 time_slot = time_of_one_window(1024.0, 11025.0, 100.0)
 
@@ -26,7 +29,7 @@ line_num = 0.0
 
 list = [ ]
 
-file.each_line do |line|
+lines.each do |line|
   number   = line.to_i
   line_num = line_num + 1
 
@@ -52,23 +55,28 @@ file.each_line do |line|
   end
   
   temp_end = time_in_sec - time_end_offset # substract offset
-  #total_segments = file.to_a.size
-  #puts total_segments
-  if line_num == 1163 #total_segments
+  
+  if line_num == total_segments #total_segments
 	temp_end = time_in_sec # last: to the end
   end
   
-  data[ :startTime ] = temp_start.round(2)
-  data[ :endTime ] = temp_end.round(2)
-  data[ :editable ] = false
-  data[ :color ] = color
-  data[ :labelText ] = "segment#{line_num.to_i}"
-  #add hash to array
-  list<<data
+  if list.last && list.last[:endTime] == temp_start.round(2) && list.last[:color] == color
+    list.last[:endTime]  =  temp_end.round(2)
+  else
+    data[ :startTime ] = temp_start.round(2)
+    data[ :endTime ] = temp_end.round(2)
+    data[ :editable ] = true
+    data[ :color ] = color
+    data[ :labelText ] = "segment#{line_num.to_i}"
+    #add hash to array
+    list << data
+  end
+  
   
 end
 
-pp list
+ pp list
+
 
 #write json
 File.open("./audio/test.json","w") do |f|
