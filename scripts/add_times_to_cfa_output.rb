@@ -54,12 +54,12 @@ file.each_line do |line|
   temp_end = time_in_sec - time_end_offset # substract offset
   #total_segments = file.to_a.size
   #puts total_segments
-  if line_num == 1163
+  if line_num == 1163 #total_segments
 	temp_end = time_in_sec # last: to the end
   end
   
-  data[ :startTime ] = temp_start
-  data[ :endTime ] = temp_end
+  data[ :startTime ] = temp_start.round(2)
+  data[ :endTime ] = temp_end.round(2)
   data[ :editable ] = false
   data[ :color ] = color
   data[ :labelText ] = "segment#{line_num.to_i}"
