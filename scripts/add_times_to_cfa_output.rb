@@ -5,12 +5,12 @@ def num_frames_in_a_block( num_blocks, block_size, step_size )
   block_size + ( num_blocks - 1 ) * step_size
 end
 
-def num_samples_in_a_window( num_frames, block_size, step_size )
-  block_size + ( num_frames - 1 ) * step_size
+def num_samples_in_a_window( num_frames, window_size, step_size )
+  window_size + ( num_frames - 1 ) * step_size
 end
 
-def time_of_one_window (window_block_size, sample_rate, block_frame_size)
-  window_block_size / sample_rate * block_frame_size
+def time_of_one_window (window_size, sample_rate, block_size)
+  window_size / sample_rate * block_size
 end
 
 file     = File.open('audio/test.mp3.cfa_2.2.csv') # 2.2 seems to be best fit for this sample
