@@ -9,8 +9,8 @@ Supported by UCL CS & BBC R&amp;D, MSc Project in 2014 Summer
 Json File Attributes
 -----------
 1. startTime: endTime - time_slot //start_offset is + 25% time_slot 
-2. endTime // end_offset is - 50% time_slot
-3. editable: false // speed-up for now, should be true
+2. endTime // end_offset //end_offset is - 25% time_slot
+3. editable: true 
 4. color: waveform color
 5. labelText: id of segment
 
