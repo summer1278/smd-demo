@@ -1,16 +1,16 @@
 require 'json'
 require 'pp'
 
-def num_frames_in_a_block( num_blocks, block_size, step_size )
-  block_size + ( num_blocks - 1 ) * step_size
+def num_frames_in_a_block( num_blocks, block_size, block_step_size )
+  block_size + ( num_blocks - 1 ) * block_step_size
 end
 
-def num_samples_in_a_window( num_frames, window_size, step_size )
-  window_size + ( num_frames - 1 ) * step_size
+def num_samples_in_a_window( num_frames, window_size, window_step_size )
+  window_size + ( num_frames - 1 ) * window_step_size
 end
 
-def time_of_one_window (window_size, sample_rate, block_size)
-  window_size / sample_rate * block_size
+def time_of_one_block (window_size, sample_rate, block_size, window_step_size)
+  window_size / sample_rate  * block_size *(window_step_size/window_size)
 end
 
 file     = File.open('audio/test.mp3.cfa_2.2.csv') # 2.2 seems to be best fit for this sample
@@ -20,11 +20,11 @@ total_segments = lines.size
 #puts total_segments
 
 # some presits
-time_slot = time_of_one_window(1024.0, 11025.0, 100.0)
+time_slot = time_of_one_block(1024.0, 11025.0, 100.0, 512.0)
 
 time_start_offset = time_slot * 0.25
 
-time_end_offset = time_slot * 0.50
+time_end_offset = time_slot * 0.25
 
 line_num = 0.0
 
@@ -50,14 +50,14 @@ lines.each do |line|
   #hash
   data = { }
   
-  temp_start = time_in_sec - time_slot + time_start_offset # add offset
-  if temp_start < 0
+ temp_start = time_in_sec - time_slot + time_start_offset # add offset
+  if temp_start < 0 || line_num == 1
 	temp_start =  0 # remove negative start times
   end
   
   temp_end = time_in_sec - time_end_offset # substract offset
   
-  if line_num == total_segments 
+ if line_num == total_segments 
 	temp_end = time_in_sec # last: to the end
   end
   
@@ -78,7 +78,7 @@ lines.each do |line|
 end
 
  pp list
-
+ #p time_slot
 
 #write json
 File.open("./audio/test.json","w") do |f|
