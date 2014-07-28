@@ -2,8 +2,8 @@ smd-demo
 ========
 Supported by UCL CS & BBC R&amp;D, MSc Project in 2014 Summer 
 
-1.Visualization of speech music discriminator
-2.Gather results from a large dataset
+1. Visualization of speech music discriminator
+2. Gather results from a large dataset
 
 
 Json File Attributes
@@ -33,6 +33,7 @@ for current example: cfa2.2 is best fit
 Taglib
 -----------
 Ruby binding C++ library for reading metadata from audio files
+
 Install C++ complier and package
 ```
 sudo apt-get install libtag1-dev
