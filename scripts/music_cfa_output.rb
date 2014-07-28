@@ -7,40 +7,40 @@ CSV.open('music/mp3_output.csv', 'w') do |music_csv|
 # header
 music_csv << ['Title','Type', 'Classification','Genre','Duration(in secs)']
 # for all audio files
-	Dir.glob('music/*.mp3') do |mp3_file|
-	#gather metadata
-	title = ''
-	clasf = ''
-	genre = ''
-	duration = ''
-		TagLib::FileRef.open(mp3_file) do |fileref|
-			unless fileref.null?
-			tag = fileref.tag 
-			title = tag.title   
-			#tag.artist  
-			#tag.album   
-			genre = tag.genre   
+  Dir.glob('music/*.mp3') do |mp3_file|
+  #gather metadata
+  title = ''
+  clasf = ''
+  genre = ''
+  duration = ''
+    TagLib::FileRef.open(mp3_file) do |fileref|
+      unless fileref.null?
+      tag = fileref.tag 
+      title = tag.title   
+      #tag.artist  
+      #tag.album   
+      genre = tag.genre   
 
-			properties = fileref.audio_properties
-			duration = properties.length  
-			end
-		end 
+      properties = fileref.audio_properties
+      duration = properties.length  
+      end
+    end 
    
-    # generate cfa output
-	system(feature_plan+mp3_file)
-	# sum-up classification result
-	file = File.open(mp3_file+'.cfa.csv')
-	lines = file.to_a.map(&:to_i)
-	if lines.include?(0)
-		clasf = 'S'
-		if lines.include?(1)
-			clasf = clasf + '&M'
-		end
-	end
-	if lines.include?(1) && !lines.include?(0) 
-		clasf = 'M'
-	end
-	# add this entry
-	music_csv << [title,'M', clasf, genre, duration]
-	end
+  # generate cfa output
+  system(feature_plan+mp3_file)
+  # sum-up classification result
+  file = File.open(mp3_file+'.cfa.csv')
+  lines = file.to_a.map(&:to_i)
+  if lines.include?(0)
+    clasf = 'S'
+    if lines.include?(1)
+      clasf = clasf + '&M'
+    end
+  end
+  if lines.include?(1) && !lines.include?(0) 
+    clasf = 'M'
+  end
+  # add this entry
+  music_csv << [title,'M', clasf, genre, duration]
+  end
 end
