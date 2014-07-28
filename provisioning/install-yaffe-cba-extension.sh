@@ -2,15 +2,8 @@
 
 set -e
 
-function force_root {
-  if [ "$(id -u)" != "0" ]; then
-     echo "This script must be run as root or with sudo" 1>&2
-     exit 1
-  fi
-}
-
 function install_yaafe_cba_extension_dependencies {
-  apt-get install -y python-numpy python-scipy unzip
+  sudo apt-get install -y python-numpy python-scipy unzip
 }
 
 function download_yaafe_cba_extension {
@@ -38,7 +31,7 @@ function install_yaafe_cba_extension {
   cd build
   cmake ..
   make
-  make install
+  sudo make install
 
   rm -rf $builddir
 }
@@ -47,8 +40,6 @@ function install_yaafe_cba_extension {
 # RUN
 
 download=`download_yaafe_cba_extension`
-
-force_root
 
 install_yaafe_cba_extension_dependencies
 
