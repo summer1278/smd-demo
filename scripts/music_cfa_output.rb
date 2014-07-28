@@ -1,6 +1,7 @@
 require 'taglib'
 
-TagLib::FileRef.open("music/Justin Bieber - As Long As You Love Me (feat. Big Sean).mp3") do |fileref|
+Dir.glob('music/*.mp3') do |mp3_file|
+  TagLib::FileRef.open(mp3_file) do |fileref|
   unless fileref.null?
     tag = fileref.tag 
     tag.title   
@@ -10,7 +11,9 @@ TagLib::FileRef.open("music/Justin Bieber - As Long As You Love Me (feat. Big Se
 
     properties = fileref.audio_properties
     properties.length  
+    p tag.title
     p tag.genre
     p properties.length
   end
 end 
+end
