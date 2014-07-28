@@ -34,6 +34,8 @@ Taglib
 -----------
 Ruby binding C++ library for reading metadata from audio files
 
+Website: http://robinst.github.io/taglib-ruby/
+
 Install C++ complier and package
 ```
 sudo apt-get install libtag1-dev
