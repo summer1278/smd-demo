@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+# vim: ft=ruby
+
+require 'rubygems'
+require 'rack'
+require 'thin'
+
+class WebServer
+
+  def initialize
+
+    project_dir = File.join( File.dirname(__FILE__), '..')
+    public_dir  = File.join( project_dir, 'public' )
+    audio_dir   = File.join( project_dir, 'audio' )
+
+    @webapp     = Rack::Builder.new do
+      map '/' do
+        run Rack::Directory.new( public_dir )
+      end
+
+      map '/audio' do
+        run Rack::Directory.new( audio_dir )
+      end
+    end
+  end
+
+  def call(env)
+    @webapp.call(env)
+  end
+
+end
+
+Rack::Handler::Thin.run WebServer.new, :Port => 9292
