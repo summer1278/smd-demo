@@ -6,6 +6,7 @@ sudo apt-get install -y build-essential       \
                         libopenssl-ruby1.9.1  \
                         libreadline-dev       \
                         libssl-dev            \
+                        libtag1-dev           \
                         libxml2               \
                         libxml2-dev           \
                         libxslt-dev           \
@@ -26,4 +27,4 @@ sudo update-alternatives                               \
   echo 2 | sudo update-alternatives --config ruby;     \
   echo 2 | sudo update-alternatives --config gem
 
-sudo gem install bundler json rack
+sudo gem install bundler json rack taglib-ruby thin
