@@ -26,7 +26,7 @@ class SumUpResults
         ones = classified.select { |i| i == 1 }.size
         percentage = ones.to_f/classified.size.to_f
 	    
-	    header = CSV.read(mp3_file+'.metadata.csv').first
+	    header = CSV.read(mp3_file.gsub('.mp3', '.metadata.csv')).first
 	    header << avg_CFA
 	    header << percentage
 	    music_csv << header
