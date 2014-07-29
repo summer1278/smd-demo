@@ -3,6 +3,38 @@
 $: << 'lib'
 
 require 'smd'
+require 'optparse'
 
-importer = Smd::ImportAudio.new 'music/test.mp3', 'music', 'results/music'
-importer.import
+options = {}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: smd-import-audio [options]"
+
+  opts.on("-i", "--input-dir [DIR]", "Input directory") do |i|
+    options[:input_directory] = i
+  end
+
+  opts.on("-o", "--output-dir [DIR]", "Output directory") do |o|
+    options[:output_directory] = o
+  end
+
+  opts.on("-t", "--type [TYPE]", "Audio type") do |t|
+    options[:type] = t
+  end
+
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+    exit
+  end
+
+end.parse!
+
+Dir.glob( options[:input_directory] + "/**/*.mp3" ) do |mp3_file|
+
+  importer = Smd::ImportAudio.new mp3_file, options[:type], options[:output_directory]
+
+  importer.import
+
+  FileUtils.rm mp3_file
+
+end
