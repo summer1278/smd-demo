@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+$: << 'lib'
+
+require 'smd'
+
+importer = Smd::ImportAudio.new 'music/test.mp3', 'music', 'results/music'
+importer.import
