@@ -29,6 +29,8 @@ OptionParser.new do |opts|
 
 end.parse!
 
+FileUtils.mkdir_p options[:output_directory]
+
 Dir.glob( options[:input_directory] + "/**/*.mp3" ) do |mp3_file|
 
   importer = Smd::ImportAudio.new mp3_file, options[:type], options[:output_directory]
