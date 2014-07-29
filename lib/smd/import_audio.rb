@@ -32,7 +32,7 @@ module Smd
     def generate_waveform
       audio_cmd = 'audiowaveform -i '#test.mp3 -o test.dat
       audio_setting = ' -z 256 -b 8'
-      system( results_file('mp3') +' -o ' + results_file('dat') + audio_setting)
+      system( audio_cmd + results_file('mp3') +' -o ' + results_file('dat') + audio_setting)
     end
 
     def generate_metadata
