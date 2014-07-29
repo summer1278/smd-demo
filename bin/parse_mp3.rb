@@ -28,9 +28,9 @@ Dir.glob('music/*.mp3') do |mp3_file|
   end
   # generate cfa output
   system(feature_plan+mp3_file)
-  file = File.open(mp3_file+'.cfa.csv')
-  lines = file.to_a.map(&:to_i)
-  lines.each_with_object(Hash.new(0)) { |number,counts| counts[number] += 1 }
+  #file = File.open(mp3_file+'.cfa.csv')
+  #lines = file.to_a.map(&:to_i)
+  #lines.each_with_object(Hash.new(0)) { |number,counts| counts[number] += 1 }
   #classification = 0.0
   #classification = counts[1]/(counts[0]+counts[1])
   
