@@ -32,7 +32,7 @@ class ImportAudio
   def generate_waveform
     audio_cmd = 'audiowaveform -i '#test.mp3 -o test.dat
     audio_setting = ' -z 256 -b 8'
-    system(audio_cmd+@input_file+' -o ' +@output_directory+'/'+@uuid+'.dat '+audio_setting)
+    system(audio_cmd+@output_directory+'/'+@uuid+'.mp3'+' -o ' +@output_directory+'/'+@uuid+'.dat '+audio_setting)
   end
 
   def generate_metadata
@@ -46,7 +46,7 @@ class ImportAudio
 
         properties = fileref.audio_properties
         #duration = properties.length
-        CSV.open(@output_directory+'/'+@uuid+'.metadata.csv', 'w') do |music_csv|
+        CSV.open(@output_directory+'/'+@uuid+'.mp3.metadata.csv', 'w') do |music_csv|
 	      music_csv << [tag.title, tag.artist, 'M', tag.genre, properties.length]
         end
       end

@@ -5,7 +5,7 @@ feature_plan = 'yaafe.py -r 11025 --resample -f "cfa: SimpleNoiseGate>Continuous
 
 CSV.open('music/mp3_output.csv', 'w') do |music_csv|
 # header
-music_csv << ['Title','Type', 'Classification','Genre','Duration(in secs)']
+music_csv << ['Title','Type', 'Classification','Genre', 'Duration(in secs)']
 # for all audio files
   Dir.glob('music/*.mp3') do |mp3_file|
   #gather metadata
