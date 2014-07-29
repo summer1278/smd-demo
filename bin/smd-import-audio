@@ -40,3 +40,6 @@ Dir.glob( options[:input_directory] + "/**/*.{mp3,m4a}" ) do |mp3_file|
   FileUtils.rm mp3_file
 
 end
+
+outputer = Smd::SumUpResults.new options[:output_directory]
+outputer.sumUp

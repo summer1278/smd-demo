@@ -15,7 +15,11 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=0
+current_page=1
+FILE_NAME_0=9;Ruby;0;16;1;1;0;/home/summer/smd-demo/lib/smd.rb;0;4
+FILE_NAME_1=1441;Ruby;0;16;1;1;0;/home/summer/smd-demo/lib/smd/import_audio.rb;0;4
+FILE_NAME_2=468;Ruby;0;16;1;1;0;/home/summer/smd-demo/bin/parse_mp3.rb;0;4
+FILE_NAME_3=139;None;0;16;1;1;0;/home/summer/smd-demo/bin/smd-import-audio;0;4
 
 [VTE]
 last_dir=/home/summer/smd-demo
