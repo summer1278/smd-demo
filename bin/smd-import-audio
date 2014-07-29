@@ -31,7 +31,7 @@ end.parse!
 
 FileUtils.mkdir_p options[:output_directory]
 
-Dir.glob( options[:input_directory] + "/**/*.mp3", options[:input_directory] + "/**/*.m4a" ) do |mp3_file|
+Dir.glob( options[:input_directory] + "/**/*.{mp3,m4a}" ) do |mp3_file|
 
   importer = Smd::ImportAudio.new mp3_file, options[:type], options[:output_directory]
 
