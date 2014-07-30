@@ -18,6 +18,7 @@ module Smd
       generate_cfa_data
       generate_waveform
       generate_metadata
+      generate_origlink
     end
 
     def generate_cfa_data
@@ -51,6 +52,10 @@ module Smd
           end
         end
       end
+    end
+
+    def generate_origlink
+      File.open(results_file('orig.txt'), 'w') {|f| f.puts @input_file }
     end
 
     def copy_mp3
