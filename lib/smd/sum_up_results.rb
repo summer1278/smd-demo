@@ -3,8 +3,7 @@ require 'csv'
 module Smd
 
   class SumUpResults
-    def initialize(result_directory)
-      @result_directory = result_directory
+    def initialize( result_directory)
     end
 
     def sumUp
@@ -32,6 +31,9 @@ module Smd
         percentage = ones.to_f/classified.size.to_f
 
         header = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv', '.metadata.csv')).first
+        if header[2] == 'S'
+          percentage = 1 - percentage
+        end
         header << avg_CFA
         header << percentage
         music_csv << header
