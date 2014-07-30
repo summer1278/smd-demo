@@ -3,15 +3,15 @@ require 'csv'
 module Smd
 
   class SumUpResults
-    def initialize(result_directory) 
+    def initialize(result_directory)
       @result_directory = result_directory
     end
-    
+
     def sumUp
       collect_results
       combine_genre
     end
-    
+
     def collect_results
       CSV.open(@result_directory+'/mp3_output.csv', 'w') do |music_csv|
         music_csv << ['Title', 'Artist', 'Type', 'Genre', 'Duration(in secs)', 'Average CFA', 'CFA correct percentage']
@@ -20,17 +20,17 @@ module Smd
         lines = file.to_a#.map(&:to_i)
         avg_CFA = lines.reduce(0.0){ |sum, el| sum + el.to_f }.to_f / lines.size
 
-        classified = lines.map do |i| 
+        classified = lines.map do |i|
           if i.to_f >= 2.2
             1
           else
             0
           end
         end
-        
+
         ones = classified.select { |i| i == 1 }.size
         percentage = ones.to_f/classified.size.to_f
-        
+
         header = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv', '.metadata.csv')).first
         header << avg_CFA
         header << percentage
@@ -41,7 +41,7 @@ module Smd
 
   def combine_genre
     results = CSV.read(@result_directory+'/mp3_output.csv',{:headers => true}) # array of arrays
-    a = results.group_by {|e| e[3]}  
+    a = results.group_by {|e| e[3]}
     genres = a.keys
     #p a['Vocal'][0].field('CFA correct percentage')
     # genre, index, header
@@ -59,12 +59,11 @@ module Smd
       end
     end
   end
-  
+
   def seconds_to_hours( secs )
     Time.at(secs).gmtime.strftime('%R:%S')
   end
-  
-end
 
+end
 
 end
