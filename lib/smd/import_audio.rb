@@ -68,5 +68,5 @@ module Smd
 
 end
 
-# importer = ImportAudio.new('test.mp3', 'music', 'results')
+# importer = ImportAudio.new 'test.mp3', 'music', 'results'
 # importer.import
