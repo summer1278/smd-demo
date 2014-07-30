@@ -55,7 +55,7 @@ module Smd
           sum_time += tracks.field('Duration(in secs)').to_i
         end
         avg = sum/a[genre].size
-        avg_csv << [genre,avg,a[genre].size, sum_time]
+        avg_csv << [genre,avg,a[genre].size, seconds_to_hours(sum_time)]
       end
     end
   end
