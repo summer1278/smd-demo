@@ -1,5 +1,4 @@
 require 'csv'
-#require 'cfa_data'
 
 module Smd
 
