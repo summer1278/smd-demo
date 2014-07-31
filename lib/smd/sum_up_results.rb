@@ -3,7 +3,8 @@ require 'csv'
 module Smd
 
   class SumUpResults
-    def initialize( result_directory)
+    def initialize( result_directory )
+      @result_directory = result_directory
     end
 
     def sumUp
