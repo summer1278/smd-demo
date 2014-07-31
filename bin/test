@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+
+$: << 'lib'
+
+require 'smd'
+require 'optparse'
+
+options = {}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: smd-import-audio [options]"
+
+  opts.on("-i", "--input-dir [DIR]", "Input directory") do |i|
+    options[:input_directory] = i
+  end
+
+  opts.on("-o", "--output-dir [DIR]", "Output directory") do |o|
+    options[:output_directory] = o
+  end
+
+
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+    exit
+  end
+
+end.parse!
+feature_plans = [
+  { :block_size => 512, :step_size => 256 },
+  { :block_size => 256, :step_size => 128 },
+  { :block_size => 128, :step_size => 64 },
+  { :bin_threshold => 10 },
+  { :bin_threshold => 5 },
+  { :bin_threshold => 2.5 },
+  { :bin_threshold => 1.25 },
+  { :bin_threshold => 6.25 },
+]
+
+Dir.glob(options[:input_directory] + "/**/*.{mp3,m4a}") do |mp3_file|
+  feature_plans.each_with_index do |plan, i|
+    dir = options[:output_directory]+ i.to_s
+    FileUtils.mkdir_p dir
+    cfa = Smd::CfaProcessor.new( mp3_file, dir, plan )
+    cfa.process
+  end
+end

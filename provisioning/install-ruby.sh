@@ -27,4 +27,4 @@ sudo update-alternatives                               \
   echo 2 | sudo update-alternatives --config ruby;     \
   echo 2 | sudo update-alternatives --config gem
 
-sudo gem install bundler json rack taglib-ruby thin
+sudo gem install bundler json rack taglib-ruby thin parallel

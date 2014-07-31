@@ -50,6 +50,7 @@ module Smd
               p 'undefined type of input, speech or music'
             end
           end
+          end
         end
       end
     end

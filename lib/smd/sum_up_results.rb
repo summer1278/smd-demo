@@ -16,25 +16,14 @@ module Smd
       CSV.open(@result_directory+'/mp3_output.csv', 'w') do |music_csv|
         music_csv << ['Title', 'Artist', 'Type', 'Genre', 'Duration(in secs)', 'Average CFA', 'CFA correct percentage']
         Dir.glob(@result_directory+'/**/*.cfa.csv') do |cfa_csv_file|
-         file = File.open(cfa_csv_file)
-        lines = file.to_a#.map(&:to_i)
-        avg_CFA = lines.reduce(0.0){ |sum, el| sum + el.to_f }.to_f / lines.size
+        #file = File.open(cfa_csv_file)
 
-        classified = lines.map do |i|
-          if i.to_f >= 2.2
-            1
-          else
-            0
-          end
-        end
-
-        ones = classified.select { |i| i == 1 }.size
-        percentage = ones.to_f/classified.size.to_f
+        cfa_data = CfaData.new(File.open(cfa_csv_file).to_a, 2.2) #threshold = 2.2
+        avg_CFA = cfa_data.avg_cfa
 
         header = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv', '.metadata.csv')).first
-        if header[2] == 'S'
-          percentage = 1 - percentage
-        end
+        percentage = cfa_data.cfa_percentage(header[2])
+
         header << avg_CFA
         header << percentage
         music_csv << header
@@ -49,24 +38,37 @@ module Smd
     #p a['Vocal'][0].field('CFA correct percentage')
     # genre, index, header
     CSV.open(@result_directory+'/avg_mp3_output.csv', 'w') do |avg_csv|
-      avg_csv << ['Genre', 'AVG CFA correctness', 'Number of Tracks', 'Total duration']
+      avg_csv << ['Genre', 'AVG CFA correctness', 'Number of Tracks', 'Total duration', 'Type']
+      sum_time = 0
       genres.each do |genre|
         sum = 0.0
-        sum_time = 0
+        sum_genre_time = 0
+        type = ''
         a[genre].each do |tracks|
           sum += tracks.field('CFA correct percentage').to_f
+          sum_genre_time += tracks.field('Duration(in secs)').to_i
+          type = tracks.field('Type')
           sum_time += tracks.field('Duration(in secs)').to_i
         end
         avg = sum/a[genre].size
-        avg_csv << [genre,avg,a[genre].size, seconds_to_hours(sum_time)]
+        avg_csv << [genre,avg,a[genre].size, seconds_to_hours(sum_genre_time),type]
       end
+      p seconds_to_days(sum_time)
     end
   end
 
   def seconds_to_hours( secs )
-    Time.at(secs).gmtime.strftime('%R:%S')
+    hours = secs / 3600
+    mins  = (secs % 3600) / 60
+    hours.to_s + ':' + mins.to_s  
+  end
+
+  def seconds_to_days( t )
+    mm, ss = t.divmod(60)            
+    hh, mm = mm.divmod(60)       
+    dd, hh = hh.divmod(24)
+    return "%d days, %d hours, %d minutes and %d seconds" % [dd, hh, mm, ss]
   end
 
 end
-
 end

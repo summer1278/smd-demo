@@ -14,8 +14,7 @@ function install_yaafe_dependencies {
                           libfftw3-3          \
                           libfftw3-dev        \
                           liblapack-dev       \
-                          libhdf5-serial-dev  \
-                          libhdf5-serial-1.8.4
+                          libhdf5-serial-dev
 
 }
 
