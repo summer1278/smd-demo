@@ -49,24 +49,37 @@ module Smd
     #p a['Vocal'][0].field('CFA correct percentage')
     # genre, index, header
     CSV.open(@result_directory+'/avg_mp3_output.csv', 'w') do |avg_csv|
-      avg_csv << ['Genre', 'AVG CFA correctness', 'Number of Tracks', 'Total duration']
+      avg_csv << ['Genre', 'AVG CFA correctness', 'Number of Tracks', 'Total duration', 'Type']
+      sum_time = 0
       genres.each do |genre|
         sum = 0.0
-        sum_time = 0
+        sum_genre_time = 0
+        type = ''
         a[genre].each do |tracks|
           sum += tracks.field('CFA correct percentage').to_f
+          sum_genre_time += tracks.field('Duration(in secs)').to_i
+          type = tracks.field('Type')
           sum_time += tracks.field('Duration(in secs)').to_i
         end
         avg = sum/a[genre].size
-        avg_csv << [genre,avg,a[genre].size, seconds_to_hours(sum_time)]
+        avg_csv << [genre,avg,a[genre].size, seconds_to_hours(sum_genre_time),type]
       end
+      p seconds_to_days(sum_time)
     end
   end
 
   def seconds_to_hours( secs )
-    Time.at(secs).gmtime.strftime('%R:%S')
+    hours = secs / 3600
+    mins  = (secs % 3600) / 60
+    hours.to_s + ':' + mins.to_s  
+  end
+
+  def seconds_to_days( t )
+    mm, ss = t.divmod(60)            
+    hh, mm = mm.divmod(60)       
+    dd, hh = hh.divmod(24)
+    return "%d days, %d hours, %d minutes and %d seconds" % [dd, hh, mm, ss]
   end
 
 end
-
 end

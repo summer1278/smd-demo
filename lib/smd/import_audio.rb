@@ -44,11 +44,12 @@ module Smd
           CSV.open( results_file('metadata.csv'), 'w') do |music_csv|
             if @type == 'music'
               music_csv << [tag.title, tag.artist, 'M', tag.genre, properties.length]
-            else @type == 'speech'
+            else if @type == 'speech'
               music_csv << [tag.title, tag.artist, 'S', tag.genre, properties.length]
             else
               p 'undefined type of input, speech or music'
             end
+          end
           end
         end
       end
