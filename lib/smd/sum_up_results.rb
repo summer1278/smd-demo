@@ -1,4 +1,5 @@
 require 'csv'
+#require 'cfa_data'
 
 module Smd
 
@@ -16,25 +17,14 @@ module Smd
       CSV.open(@result_directory+'/mp3_output.csv', 'w') do |music_csv|
         music_csv << ['Title', 'Artist', 'Type', 'Genre', 'Duration(in secs)', 'Average CFA', 'CFA correct percentage']
         Dir.glob(@result_directory+'/**/*.cfa.csv') do |cfa_csv_file|
-         file = File.open(cfa_csv_file)
-        lines = file.to_a#.map(&:to_i)
-        avg_CFA = lines.reduce(0.0){ |sum, el| sum + el.to_f }.to_f / lines.size
+        #file = File.open(cfa_csv_file)
 
-        classified = lines.map do |i|
-          if i.to_f >= 2.2
-            1
-          else
-            0
-          end
-        end
-
-        ones = classified.select { |i| i == 1 }.size
-        percentage = ones.to_f/classified.size.to_f
+        cfa_data = CfaData.new(File.open(cfa_csv_file).to_a, 2.2) #threshold = 2.2
+        avg_CFA = cfa_data.avg_cfa
 
         header = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv', '.metadata.csv')).first
-        if header[2] == 'S'
-          percentage = 1 - percentage
-        end
+        percentage = cfa_data.cfa_percentage(header[2])
+
         header << avg_CFA
         header << percentage
         music_csv << header
