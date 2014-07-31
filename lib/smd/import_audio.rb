@@ -10,7 +10,7 @@ module Smd
       @input_file = input_file
       @type = type
       @output_directory = output_directory
-      @uuid = SecureRandom.uuid   
+      @uuid = SecureRandom.uuid
     end
 
     def import
@@ -44,7 +44,7 @@ module Smd
           CSV.open( results_file('metadata.csv'), 'w') do |music_csv|
             if @type == 'music'
               music_csv << [tag.title, tag.artist, 'M', tag.genre, properties.length]
-            else @type == 'speech'
+            elsif @type == 'speech'
               music_csv << [tag.title, tag.artist, 'S', tag.genre, properties.length]
             else
               p 'undefined type of input, speech or music'
