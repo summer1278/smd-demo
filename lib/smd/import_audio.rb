@@ -53,22 +53,23 @@ module Smd
         end
       end
     end
-  end
 
-  def generate_origlink
-    File.open(results_file('orig.txt'), 'w') {|f| f.puts @input_file }
-  end
-
-  def copy_mp3
-    if @input_file =~ /\.mp3$/
-      FileUtils.cp( @input_file, results_file('mp3') )
-    else
-      system("avconv -i \"#{@input_file}\" #{results_file('mp3')}")
+    def generate_origlink
+      File.open(results_file('orig.txt'), 'w') {|f| f.puts @input_file }
     end
-  end
 
-  def results_file(type)
-    File.join( @output_directory, @uuid + '.' + type )
+    def copy_mp3
+      if @input_file =~ /\.mp3$/
+        FileUtils.cp( @input_file, results_file('mp3') )
+      else
+        system("avconv -i \"#{@input_file}\" #{results_file('mp3')}")
+      end
+    end
+
+    def results_file(type)
+      File.join( @output_directory, @uuid + '.' + type )
+    end
+
   end
 end
 
