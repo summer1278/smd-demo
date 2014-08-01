@@ -30,6 +30,14 @@ module Smd
       system( feature_plan + ' ' + results_file('mp3') )
     end
 
+    def generate_bbc_segments
+      cmd  = "sonic-annotator "
+      cmd += "-d vamp:bbc-vamp-plugins:bbc-speechmusic-segmenter:segmentation "
+      cmd += "#{results_file('mp3')} -w csv --csv-stdout > #{results_file('mp3.bbc-segments.csv')}"
+
+      system cmd
+    end
+
     def generate_waveform
       audio_cmd = 'audiowaveform -i '#test.mp3 -o test.dat
       audio_setting = ' -z 256 -b 8'
