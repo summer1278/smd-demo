@@ -36,6 +36,11 @@ Vagrant.configure("2") do |config|
     :path       => 'provisioning/install-yaffe-cba-extension.sh',
     :privileged => false
 
+  # Install VAMP & BBC R&D Speech Music segmenter plugin
+  config.vm.provision :shell,
+    :path       => 'provisioning/install-vamp.sh',
+    :privileged => false
+
   # Install ruby
   config.vm.provision :shell,
     :path       => 'provisioning/install-ruby.sh',
