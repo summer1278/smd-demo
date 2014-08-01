@@ -57,6 +57,10 @@ module Smd
     end
   end
 
+  def combine_feature_plan
+    #test-features, change results to @result_directory
+  end
+
   def seconds_to_hours( secs )
     hours = secs / 3600
     mins  = (secs % 3600) / 60
