@@ -27,7 +27,7 @@ module Smd
       plan += '>WindowConvolution WCLength=17" '
       plan += '-p Metadata=False -b'
 
-      system( plan + ' ' + @output_directory + ' '+ @input_file )
+      system( plan + ' ' + @output_directory + ' ' + @input_file )
     end
 
   end

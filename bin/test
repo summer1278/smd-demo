@@ -30,10 +30,22 @@ feature_plans = [
   { :block_size => 256, :step_size => 128 },
   { :block_size => 128, :step_size => 64 },
   { :bin_threshold => 10 },
+  { :bin_threshold => 6.25 },
   { :bin_threshold => 5 },
   { :bin_threshold => 2.5 },
   { :bin_threshold => 1.25 },
-  { :bin_threshold => 6.25 },
+  { :bin_threshold => 1 },
+  { :bin_threshold => 0.5 },
+  { :bin_threshold => 0.1 },
+  { :nb_peaks => 10},
+  { :nb_peaks => 15},
+  { :nb_peaks => 17},
+  { :nb_peaks => 20},
+  { :nb_peaks => 25},
+  { :nb_peaks => 30},
+  { :nb_peaks => 35},
+  { :nb_peaks => 40},
+  { :nb_sum_frames => 50, :step_nb_sum_frames => 25}
 ]
 
 Dir.glob(options[:input_directory] + "/**/*.{mp3,m4a}") do |mp3_file|
