@@ -30,6 +30,14 @@ module Smd
       system( feature_plan + ' ' + results_file('mp3') )
     end
 
+    def generate_bbc_segments
+      cmd  = "sonic-annotator "
+      cmd += "-d vamp:bbc-vamp-plugins:bbc-speechmusic-segmenter:segmentation "
+      cmd += "#{results_file('mp3')} -w csv --csv-stdout > #{results_file('mp3.bbc-segments.csv')}"
+
+      system cmd
+    end
+
     def generate_waveform
       audio_cmd = 'audiowaveform -i '#test.mp3 -o test.dat
       audio_setting = ' -z 256 -b 8'
@@ -53,22 +61,23 @@ module Smd
         end
       end
     end
-  end
 
-  def generate_origlink
-    File.open(results_file('orig.txt'), 'w') {|f| f.puts @input_file }
-  end
-
-  def copy_mp3
-    if @input_file =~ /\.mp3$/
-      FileUtils.cp( @input_file, results_file('mp3') )
-    else
-      system("avconv -i \"#{@input_file}\" #{results_file('mp3')}")
+    def generate_origlink
+      File.open(results_file('orig.txt'), 'w') {|f| f.puts @input_file }
     end
-  end
 
-  def results_file(type)
-    File.join( @output_directory, @uuid + '.' + type )
+    def copy_mp3
+      if @input_file =~ /\.mp3$/
+        FileUtils.cp( @input_file, results_file('mp3') )
+      else
+        system("avconv -i \"#{@input_file}\" #{results_file('mp3')}")
+      end
+    end
+
+    def results_file(type)
+      File.join( @output_directory, @uuid + '.' + type )
+    end
+
   end
 end
 
