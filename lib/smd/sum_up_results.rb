@@ -14,7 +14,7 @@ module Smd
 
     def collect_results
       CSV.open(@result_directory+'/mp3_output.csv', 'w') do |music_csv|
-        music_csv << ['Title', 'Artist', 'Type', 'Genre', 'Duration(in secs)', 'Average CFA', 'CFA correct percentage']
+        music_csv << ['Title', 'Artist', 'Type', 'Genre', 'Duration(in secs)', 'Average CFA', 'CFA correct percentage', 'ZCR correct percentage']
         Dir.glob(@result_directory+'/**/*.cfa.csv') do |cfa_csv_file|
         #file = File.open(cfa_csv_file)
 
@@ -22,10 +22,14 @@ module Smd
         avg_CFA = cfa_data.avg_cfa
 
         header = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv', '.metadata.csv')).first
-        percentage = cfa_data.cfa_percentage(header[2])
+        cfa_percentage = cfa_data.cfa_percentage(header[2])
+        
+        zcr_data = ZcrData.new(CSV.read(cfa_csv_file.gsub('.cfa.csv', '.bbc-segments.csv')).flatten.compact)
+        zcr_percentage = zcr_data.zcr_percentage(header[2],header[4])
 
         header << avg_CFA
-        header << percentage
+        header << cfa_percentage
+        header << zcr_percentage
         music_csv << header
       end
     end
@@ -38,20 +42,23 @@ module Smd
     #p a['Vocal'][0].field('CFA correct percentage')
     # genre, index, header
     CSV.open(@result_directory+'/avg_mp3_output.csv', 'w') do |avg_csv|
-      avg_csv << ['Genre', 'AVG CFA correctness', 'Number of Tracks', 'Total duration', 'Type']
+      avg_csv << ['Genre', 'AVG CFA correctness', 'AVG ZCR correctness', 'Number of Tracks', 'Total duration', 'Type']
       sum_time = 0
       genres.each do |genre|
         sum = 0.0
+        sum_zcr = 0.0
         sum_genre_time = 0
         type = ''
         a[genre].each do |tracks|
           sum += tracks.field('CFA correct percentage').to_f
+          sum_zcr += tracks.field('ZCR correct percentage').to_f
           sum_genre_time += tracks.field('Duration(in secs)').to_i
           type = tracks.field('Type')
           sum_time += tracks.field('Duration(in secs)').to_i
         end
         avg = sum/a[genre].size
-        avg_csv << [genre,avg,a[genre].size, seconds_to_hours(sum_genre_time),type]
+        avg_zcr = sum_zcr/a[genre].size
+        avg_csv << [genre, avg, avg_zcr, a[genre].size, seconds_to_hours(sum_genre_time),type]
       end
       p seconds_to_days(sum_time)
     end

@@ -42,25 +42,25 @@ lines.each do |line|
   # say music is red, no_music is green.
   if number == 1 
 	color = 'rgba(215, 40, 40, 0.9)' # red
-  else
+else
 	color = 'rgba(75, 213, 44, 0.9)' # green
-  end
-  
+end
+
 
   #hash
   data = { }
   
  temp_start = time_in_sec - time_slot + time_start_offset # add offset
-  if temp_start < 0 || line_num == 1
+ if temp_start < 0 || line_num == 1
 	temp_start =  0 # remove negative start times
-  end
-  
+end
+
   temp_end = time_in_sec - time_end_offset # substract offset
   
- if line_num == total_segments 
+  if line_num == total_segments 
 	temp_end = time_in_sec # last: to the end
-  end
-  
+end
+
   # merge same-label segments into one
   if list.last && list.last[:endTime] == temp_start.round(2) && list.last[:color] == color
     list.last[:endTime]  =  temp_end.round(2)
@@ -77,7 +77,7 @@ lines.each do |line|
   
 end
 
- pp list
+pp list
  #p time_slot
 
 #write json

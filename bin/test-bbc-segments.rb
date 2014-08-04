@@ -1,6 +1,6 @@
 require 'csv'
 
-def bs_percentage ( type,duration,segments )
+def zcr_percentage ( type,duration,segments )
   num_seg = ( segments.size )/3
   #p num_seg
   if 
@@ -35,7 +35,7 @@ CSV.open('results'+''+'/mp3_output.csv', 'w') do |music_csv|
   	header = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv', '.metadata.csv')).first 
     duration = header[4]
     if segments != nil
-      header << bs_percentage(header[2],duration,segments)
+      header << zcr_percentage(header[2],duration,segments)
       music_csv<< header
     end
   end
