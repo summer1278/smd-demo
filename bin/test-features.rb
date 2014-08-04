@@ -30,7 +30,7 @@ found.each do |name,count|
           #header << avg_CFA
           #header << percentage
           fp_csv << [avg_CFA,percentage]
-          puts "# warning duplicate #{path}"
+          #puts "# warning duplicate #{path}"
         end
       end
     end
