@@ -47,7 +47,7 @@ def compare_filenames
       p file_name
       count += 1
     end
-    p count+ ' files missing'
+    p count
   end
 end
 #convert_csvs
