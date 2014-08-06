@@ -47,8 +47,8 @@ def compare_filenames
       p file_name
       count += 1
     end
-    p count
   end
+  p count
 end
 #convert_csvs
 #download_mp3s
