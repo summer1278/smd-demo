@@ -23,7 +23,7 @@ end
 def download_mp3s
   FileUtils::mkdir_p '/data/speech/desert-island-discs'
   system 'cd new'
-  Dir.glob('results/transcripts/*.csv') do |csv_file|
+  Dir.glob('/data/speech/desert-island-discs-transcripts/*.csv') do |csv_file|
     file = CSV.read(csv_file)
     #file[6][1]
     cmd = 'wget http://downloads.bbc.co.uk/podcasts/radio4/dida/'
