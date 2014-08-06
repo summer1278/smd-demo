@@ -36,6 +36,7 @@ def download_mp3s
 end
 
 def compare_filenames
+  count = 0
   Dir.glob('/data/speech/desert-island-discs-transcripts/*.csv') do |csv_file|
     file = CSV.read(csv_file)
     file_name = file[6][1] + '.mp3'
@@ -44,7 +45,9 @@ def compare_filenames
     end
     if File.exists?('/data/speech/desert-island-discs/'+file_name) == false
       p file_name
+      count += 1
     end
+    p count+ ' files missing'
   end
 end
 #convert_csvs
