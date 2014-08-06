@@ -38,11 +38,15 @@ end
 def compare_filenames
   Dir.glob('/data/speech/desert-island-discs-transcripts/*.csv') do |csv_file|
     file = CSV.read(csv_file)
-    if File.exists?('/data/speech/desert-island-discs/'+file[6][1] + '.mp3') == false
-      p file[6][1]
+    file_name = file[6][1] + '.mp3'
+    if file[6][1].include?('.mp3')
+      file_name = file[6][1]
+    end
+    if File.exists?('/data/speech/desert-island-discs/'+file_name) == false
+      p file_name
     end
   end
 end
 #convert_csvs
-download_mp3s
+#download_mp3s
 compare_filenames
