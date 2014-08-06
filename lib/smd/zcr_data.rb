@@ -10,8 +10,7 @@ module Smd
   def zcr_percentage ( type,duration )
 	  num_seg = ( @segments.size )/3
 	  #p num_seg
-	  if 
-	  	num_seg == 1 
+	  if num_seg == 1 
 	  	if @segments[3] == 'Music'
 	  	  percentage = 1
 	  	else

@@ -17,7 +17,7 @@ module Smd
         music_csv << ['Title', 'Artist', 'Type', 'Genre', 'Duration(in secs)', 'Average CFA', 'CFA correct percentage', 'ZCR correct percentage']
         Dir.glob(@result_directory+'/**/*.cfa.csv') do |cfa_csv_file|
         #file = File.open(cfa_csv_file)
-
+        
         cfa_data = CfaData.new(File.open(cfa_csv_file).to_a, 2.2) #threshold = 2.2
         avg_CFA = cfa_data.avg_cfa
 
@@ -50,11 +50,13 @@ module Smd
         sum_genre_time = 0
         type = ''
         a[genre].each do |tracks|
-          sum += tracks.field('CFA correct percentage').to_f
-          sum_zcr += tracks.field('ZCR correct percentage').to_f
-          sum_genre_time += tracks.field('Duration(in secs)').to_i
-          type = tracks.field('Type')
-          sum_time += tracks.field('Duration(in secs)').to_i
+          if tracks.field('CFA correct percentage') != nil && tracks.field('ZCR correct percentage')!=nil
+            sum += tracks.field('CFA correct percentage').to_f
+            sum_zcr += tracks.field('ZCR correct percentage').to_f
+            sum_genre_time += tracks.field('Duration(in secs)').to_i
+            type = tracks.field('Type')
+            sum_time += tracks.field('Duration(in secs)').to_i
+          end
         end
         avg = sum/a[genre].size
         avg_zcr = sum_zcr/a[genre].size
