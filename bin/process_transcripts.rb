@@ -26,7 +26,7 @@ def download_mp3s
     file = CSV.read(csv_file)
     #file[6][1]
     file_name = file[6][1] + '.mp3'
-    if file[6][1].contains?('.mp3')
+    if file[6][1].include?('.mp3')
       file_name = file[6][1]
     end
     cmd = 'wget http://downloads.bbc.co.uk/podcasts/radio4/dida/'
@@ -44,5 +44,5 @@ def compare_filenames
   end
 end
 #convert_csvs
-#download_mp3s
+download_mp3s
 compare_filenames
