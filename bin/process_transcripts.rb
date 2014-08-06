@@ -1,11 +1,13 @@
 require 'fileutils'
+require 'csv'
+require 'pp'
 
 def convert_csvs
   # remove spaces
   Dir.glob("**/*\ *").each do |original_file|
     underscore_file = original_file.gsub(" ","_")
     FileUtils.mv(original_file,underscore_file)
-    p "Renamed:  #{original_file} =&gt; #{underscore_file}"
+    p "Renamed:  #{original_file} =&gt; #{underscore_file}" 
   end
   # ssconvert file.xlsx file.csv
   Dir.glob('results/transcripts/*.xls') do |xls_file|
@@ -15,8 +17,20 @@ def convert_csvs
     cmd += xls_file
     cmd += ' ' + xls_file.gsub('.xls','.csv')
     system cmd
-    #p 'processed ' + xls_file
   end
 end
 
-convert_csvs
+def download_mp3s
+  FileUtils::mkdir_p '/data/speech/desert-island-discs'
+  system 'cd new'
+  Dir.glob('results/transcripts/*.csv') do |csv_file|
+    file = CSV.read(csv_file)
+    #file[6][1]
+    cmd = 'wget http://downloads.bbc.co.uk/podcasts/radio4/dida/'
+    cmd += file[6][1]+ '.mp3 -P ' +'/data/speech/desert-island-discs/'
+    system cmd
+  end
+end
+
+#convert_csvs
+download_mp3s
