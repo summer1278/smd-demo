@@ -29,7 +29,12 @@ def download_mp3s
     if file[6][1].include?('.mp3')
       file_name = file[6][1]
     end
-    cmd = 'wget http://downloads.bbc.co.uk/podcasts/radio4/dida/'
+    if file_name.include?(dida)
+      dir = 'dida'
+    else
+      dir = 'did'
+    end
+    cmd = 'wget http://downloads.bbc.co.uk/podcasts/radio4/'+dir+'/'
     cmd += file_name+' -P ' +'/data/speech/desert-island-discs/'
     system cmd
   end
@@ -51,5 +56,5 @@ def compare_filenames
   p count
 end
 #convert_csvs
-#download_mp3s
+download_mp3s
 compare_filenames
