@@ -54,6 +54,8 @@ module Smd
               music_csv << [tag.title, tag.artist, 'M', tag.genre, properties.length]
             elsif @type == 'speech'
               music_csv << [tag.title, tag.artist, 'S', tag.genre, properties.length]
+            elsif @type == 'mixed'
+              music_csv << [tag.title, tag.artist, 'MIXED', tag.genre, properties.length]
             else
               p 'undefined type of input, speech or music'
             end
