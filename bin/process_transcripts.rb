@@ -29,7 +29,7 @@ def download_mp3s
     if file[6][1].include?('.mp3')
       file_name = file[6][1]
     end
-    if file_name.include?('dida')
+    if file_name.include?('dida_')
       dir = 'dida'
     else
       dir = 'did'
