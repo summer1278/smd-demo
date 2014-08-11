@@ -114,7 +114,7 @@ def copy_truth
     file_name = File.basename(path).gsub(".mp3\n",".truth.csv")
     #p file_name
     #new_file =File.join(txt_file.gsub('.orig.txt','.truth.csv'))
-    FileUtils.cp('/data/incoming/'+file_name ,txt_file.gsub('.orig.txt','.truth.csv')
+    FileUtils.cp('/data/incoming/'+file_name ,txt_file.gsub('.orig.txt','.truth.csv'))
   end
 end
 
