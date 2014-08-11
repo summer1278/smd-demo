@@ -112,6 +112,7 @@ def copy_truth
     path = File.read(txt_file)
     p path
     file_name = File.basename(path).gsub('.mp3','.truth.csv')
+    p file_name
    FileUtils.cp('/data/incoming/'+file_name ,'/data/results/speech/desert-island-discs/'+txt_file.gsub('.orig.txt','.truth.csv'))
   end
 end
