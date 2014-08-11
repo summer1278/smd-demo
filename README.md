@@ -4,6 +4,8 @@ Supported by UCL CS & BBC R&amp;D, MSc Project in 2014 Summer
 
 1. Visualization of speech music discriminator
 2. Gather results from a large dataset
+3. Pure music/speech: correctness percentage comparison
+4. Mixed music&speech: time boundary (percentage) VS ground truth
 
 
 Json File Attributes
@@ -46,3 +48,16 @@ sudo apt-get install gcc g++
 ```
 sudo gem install taglib-ruby
 ```
+
+BBC Segmenter
+-----------
+Based on Zero-Crossing Rate
+
+Source Page: https://github.com/bbcrd/bbc-vamp-plugins/blob/master/src/SpeechMusicSegmenter.h
+
+
+Peaks.js
+-----------
+JavaScript UI for Audio Waveform
+
+Project Page: https://github.com/bbcrd/peaks.js
