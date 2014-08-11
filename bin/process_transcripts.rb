@@ -105,10 +105,20 @@ def generate_truth
     segments.each {|row| csv_file<<row}
   end
 end
+
+def copy_truth
+  Dir.glob('/data/results/speech/desert-island-discs/*.txt') do |txt_file|
+    path = File.read(txt_file).first
+    file_name = File.basename(path).gsub('.mp3','.truth.csv')
+    system ('cp -r /data/incoming/'+file_name +' /data/results/speech/desert-island-discs/')
+  end
+end
+
 end
 
 
 #convert_csvs
 #download_mp3s
 compare_filenames
-generate_truth
+#generate_truth
+copy_truth

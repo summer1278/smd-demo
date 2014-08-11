@@ -19,7 +19,7 @@ module Smd
       generate_waveform
       generate_metadata
       generate_origlink
-      copy_truth
+      #copy_truth
     end
 
     def generate_cfa_data
