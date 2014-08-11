@@ -110,12 +110,14 @@ end
 def copy_truth
   Dir.glob('/data/results/speech/desert-island-discs/*.txt') do |txt_file|
     path = File.read(txt_file)
-    p path
+    #p path
     file_name = File.basename(path).gsub(".mp3\n",".truth.csv")
-    p file_name
-   FileUtils.cp('/data/incoming/'+file_name ,'/data/results/speech/desert-island-discs/'+txt_file.gsub('.orig.txt','.truth.csv'))
+    #p file_name
+    new_file =File.join('/data/results/speech/desert-island-discs/',txt_file.gsub('.orig.txt','.truth.csv')
+    FileUtils.cp('/data/incoming/'+file_name ,new_file))
   end
 end
+
 
 
 
