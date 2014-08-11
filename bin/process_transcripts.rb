@@ -98,8 +98,8 @@ def generate_truth
       end
       segments << segment
     end
+   end
 end
-  end
   #pp segments
   CSV.open('/data/speech/desert-island-discs/'+file_name, 'w') do |csv_file|
     segments.each {|row| csv_file<<row}
@@ -108,7 +108,7 @@ end
 
 def copy_truth
   Dir.glob('/data/results/speech/desert-island-discs/*.txt') do |txt_file|
-    path = File.read(txt_file).first
+    path = File.read(txt_file).flattern.to_s
     file_name = File.basename(path).gsub('.mp3','.truth.csv')
     system ('cp -r /data/incoming/'+file_name +' /data/results/speech/desert-island-discs/')
   end
