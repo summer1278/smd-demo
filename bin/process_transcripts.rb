@@ -64,11 +64,11 @@ end
 
 def generate_truth 
  Dir.glob('/data/speech/desert-island-discs-transcripts/*.csv') do |transcript|
-  file[6][1] + '.truth.csv'
+  file = CSV.read(transcript)
+  file_name =file[6][1] + '.truth.csv'
     if file[6][1].include?('.mp3')
       file_name = file[6][1].gsub('.mp3','')
     end
-  file = CSV.read(transcript)
   segments = []
   segment = Array.new(3, nil)
   file.drop(14).each do |line|
