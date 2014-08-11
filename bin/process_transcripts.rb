@@ -1,6 +1,7 @@
 require 'fileutils'
 require 'csv'
 require 'pp'
+require 'fileutils'
 
 def convert_csvs
   # remove spaces
@@ -111,7 +112,7 @@ def copy_truth
     path = File.read(txt_file)
     p path
     file_name = File.basename(path).gsub('.mp3','.truth.csv')
-    system ('cp -r /data/incoming/'+file_name +' /data/results/speech/desert-island-discs/')
+   FileUtils.cp('/data/incoming/'+file_name ,'/data/results/speech/desert-island-discs/'+txt_file.gsub('.orig.txt','.truth.csv'))
   end
 end
 
