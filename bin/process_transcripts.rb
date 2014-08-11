@@ -67,7 +67,7 @@ def generate_truth
   file = CSV.read(transcript)
   file_name =file[6][1] + '.truth.csv'
     if file[6][1].include?('.mp3')
-      file_name = file[6][1].gsub('.mp3','')
+      file_name = file_name.gsub('.mp3','')
     end
   segments = []
   segment = Array.new(3, nil)
