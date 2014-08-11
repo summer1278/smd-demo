@@ -108,7 +108,7 @@ end
 
 def copy_truth
   Dir.glob('/data/results/speech/desert-island-discs/*.txt') do |txt_file|
-    path = File.read(txt_file).flattern
+    path = File.read(txt_file)
     p path
     file_name = File.basename(path).gsub('.mp3','.truth.csv')
     system ('cp -r /data/incoming/'+file_name +' /data/results/speech/desert-island-discs/')
