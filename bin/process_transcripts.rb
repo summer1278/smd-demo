@@ -98,7 +98,7 @@ def generate_truth
       end
       segments << segment
     end
-
+end
   end
   #pp segments
   CSV.open('/data/speech/desert-island-discs/'+file_name, 'w') do |csv_file|
