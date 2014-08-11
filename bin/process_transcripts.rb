@@ -48,13 +48,56 @@ def compare_filenames
     if file[6][1].include?('.mp3')
       file_name = file[6][1]
     end
-    if File.exists?('/data/speech/desert-island-discs/'+file_name) == false
-      p file_name
+    if !File.exists?('/data/speech/desert-island-discs/'+file_name)
       count += 1
+      p file_name
     end
   end
   p count
 end
+
+  def generate_truth 
+     Dir.glob('/data/speech/desert-island-discs-transcripts/*.csv') do |transcript|
+      file_name = File.basename(transcript).gsub('.csv', '.truth.csv')
+      file = CSV.read(transcript)
+      segments = []
+      segment = Array.new(3, nil)
+      file.drop(14).each do |line|
+        if segments.last && segments.last[1] == time_to_seconds(line[1]) && segments.last[2] == 'Music' &&
+          line[3] == nil
+          segments.last[1] = time_to_seconds(line[2])
+        elsif segments.last && segments.last[1] == time_to_seconds(line[1]) && segments.last[2] == 'Speech' &&
+          line[3] != nil
+          segments.last[1] = time_to_seconds(line[2])
+        else
+          segment = Array.new(3, nil)
+          if line[0] == 'Music' || line[0] == 'Opening Credits' || 
+            line[0] == 'Closing Credits' || line[3] != nil
+            segment[0] = time_to_seconds(line[1])
+            segment[1] = time_to_seconds(line[2])
+            
+            if line[0] == 'Music' || line[0] == 'Opening Credits' || 
+              line[0] == 'Closing Credits'
+              segment[2] = 'Music'
+            elsif line[3] != nil
+              segment[2] = 'Speech'
+            end
+          elsif line[3] == nil
+            segment[0] = time_to_seconds(line[1])
+            segment[1] = time_to_seconds(line[2])
+            segment[2] = 'Music'
+          end
+          segments << segment
+        end
+
+      end
+      pp segments
+      CSV.open('/data/speech/desert-island-discs/'+file_name, 'w') do |csv_file|
+        segments.each {|row| csv_file<<row}
+      end
+    end
+  end
 #convert_csvs
 #download_mp3s
 compare_filenames
+generate_truth

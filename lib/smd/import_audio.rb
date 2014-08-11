@@ -19,6 +19,7 @@ module Smd
       generate_waveform
       generate_metadata
       generate_origlink
+      copy_truth
     end
 
     def generate_cfa_data
@@ -71,9 +72,15 @@ module Smd
     def copy_mp3
       if @input_file =~ /\.mp3$/
         FileUtils.cp( @input_file, results_file('mp3') )
-      else
+      elsif @input_file =~ /\.m4a$/
         system("avconv -i \"#{@input_file}\" #{results_file('mp3')}")
       end
+    end
+
+    def copy_truth # only mixed
+       if @input_file =~ /\.truth.csv$/ && FIle.exists?(results_file('mp3'))
+         FileUtils.cp( @input_file, results_file('truth.csv') )
+       end
     end
 
     def results_file(type)

@@ -1,5 +1,5 @@
 require 'csv'
-require 'pp'
+r#equire 'pp'
 require 'date'
 
 def time_to_seconds ( time )
@@ -8,7 +8,7 @@ def time_to_seconds ( time )
   end
 end
 
-Dir.glob('results/transcript-csv/Michael_Deeley_658c6784.csv') do |transcript|
+Dir.glob('results/transcript-csv/*.csv') do |transcript|
   file_name = File.basename(transcript).gsub('.csv', '.truth.csv')
   file = CSV.read(transcript)
   segments = []
