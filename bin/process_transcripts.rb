@@ -64,7 +64,10 @@ end
 
 def generate_truth 
  Dir.glob('/data/speech/desert-island-discs-transcripts/*.csv') do |transcript|
-  file_name = File.basename(transcript).gsub('.csv', '.truth.csv')
+  file[6][1] + '.truth.csv'
+    if file[6][1].include?('.mp3')
+      file_name = file[6][1].gsub('.mp3','')
+    end
   file = CSV.read(transcript)
   segments = []
   segment = Array.new(3, nil)
@@ -81,7 +84,7 @@ def generate_truth
         line[0] == 'Closing Credits' || line[3] != nil
         segment[0] = time_to_seconds(line[1])
         segment[1] = time_to_seconds(line[2])
-        
+
         if line[0] == 'Music' || line[0] == 'Opening Credits' || 
           line[0] == 'Closing Credits'
           segment[2] = 'Music'
@@ -97,7 +100,7 @@ def generate_truth
     end
 
   end
-  pp segments
+  #pp segments
   CSV.open('/data/speech/desert-island-discs/'+file_name, 'w') do |csv_file|
     segments.each {|row| csv_file<<row}
   end
@@ -106,6 +109,6 @@ end
 
 
 #convert_csvs
-#download_mp3s
+download_mp3s
 compare_filenames
 generate_truth
