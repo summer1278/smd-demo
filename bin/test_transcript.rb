@@ -8,14 +8,12 @@ def time_to_seconds ( time )
   end
 end
 
-Dir.glob('results/transcript-csv/alex_salmond_877cea1a.csv') do |transcript|
+Dir.glob('results/transcript-csv/Michael_Deeley_658c6784.csv') do |transcript|
   file_name = File.basename(transcript).gsub('.csv', '.truth.csv')
-  #p file_name
-  
   file = CSV.read(transcript)
   segments = []
   segment = Array.new(3, nil)
-  file.drop(15).each do |line|
+  file.drop(14).each do |line|
     if segments.last && segments.last[1] == time_to_seconds(line[1]) && segments.last[2] == 'Music' &&
       line[3] == nil
       segments.last[1] = time_to_seconds(line[2])

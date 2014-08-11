@@ -17,7 +17,6 @@ file     = File.open('audio/test.mp3.cfa_2.2.csv') # 2.2 seems to be best fit fo
 
 lines    = file.to_a
 total_segments = lines.size
-#puts total_segments
 
 # some presits
 time_slot = time_of_one_block(1024.0, 11025.0, 100.0, 512.0)
@@ -50,14 +49,14 @@ end
   #hash
   data = { }
   
- temp_start = time_in_sec - time_slot + time_start_offset # add offset
- if temp_start < 0 || line_num == 1
+temp_start = time_in_sec - time_slot + time_start_offset # add offset
+if temp_start < 0 || line_num == 1
 	temp_start =  0 # remove negative start times
 end
 
   temp_end = time_in_sec - time_end_offset # substract offset
   
-  if line_num == total_segments 
+if line_num == total_segments 
 	temp_end = time_in_sec # last: to the end
 end
 

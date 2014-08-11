@@ -1,4 +1,5 @@
 require 'csv'
+require 'pp'
 
 module Smd
 
@@ -40,8 +41,8 @@ module Smd
 
     segments = [ ]
     segment = Array.new(3, nil)
-
-    lines.each do |line|
+    
+    @data.each do |line|
       number   = classify(line.to_f)
       line_num = line_num + 1
 
@@ -50,9 +51,9 @@ module Smd
       time_in_sec = num_samples / 11025.0
       
       if number == 1
-        segment[2] == 'Music'
+        segment[2] = 'Music'
       else
-        segment[2] == 'Speech'
+        segment[2] = 'Speech'
       end
 
       temp_start = time_in_sec - time_slot + time_start_offset # add offset
@@ -63,17 +64,20 @@ module Smd
       if line_num == total_segments 
         temp_end = time_in_sec # last: to the end
       end
-      
-      if segments.last && segments.last[1] == temp_start && segments.last[2] == segment[2]
-        segments.last = temp_end
+
+      if segments.last && segments.last[1] == temp_start.round(2) && 
+          segments.last[2] == segment[2]
+        segments.last[1] = temp_end.round(2)
+        #p segment
       else
-        segment[0] = temp_start
-        segment[1] = temp_end
-        #segment[2] = segment[2]
-        segments << segment
+        segment[0] = temp_start.round(2)
+        segment[1] = temp_end.round(2)
+        p segment[1]
+        segments << [segment[0],segment[1],segment[2]]
       end
-      return segments
     end
+    #pp segments
+    return segments
   end
 
   def num_frames_in_a_block( num_blocks, block_size, block_step_size )
@@ -89,4 +93,9 @@ module Smd
   end
 
 end
+# cfa = CfaData.new File.open('results/desert-island-discs/0bce9608-16c6-4610-a603-03d0d7f982a3.mp3.cfa.csv').to_a, 2.2
+# segments = cfa.cfa_time
+# CSV.open('results/test.csv', 'w') do |csv_file|
+#       segments.each {|row| csv_file<<row}
+#     end
 end
