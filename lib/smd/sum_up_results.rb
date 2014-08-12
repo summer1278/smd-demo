@@ -32,8 +32,8 @@ module Smd
           cfa_time = cfa_data.cfa_time
           zcr_time = zcr_data.zcr_time(header[4].to_f)
           mixed_data = MixedAudio.new(CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv','.truth.csv')),
-            cfa_time, zcr_time)
-          correctness = mixed_data.boundary_correctness(header[4].to_f)
+            cfa_time, zcr_time, header[4].to_f)
+          correctness = mixed_data.boundary_correctness
           header << correctness
           header = header.flatten
           #p header

@@ -5,21 +5,22 @@ require 'csv'
 module Smd
 
   class MixedAudio
-  	def initialize (ground_truth, cfa_segments, zcr_segments)
+  	def initialize (ground_truth, cfa_segments, zcr_segments, duration)
   		@ground_truth = ground_truth
       @cfa_segments = cfa_segments
       @zcr_segments = zcr_segments
+      @duration = duration - 3.0 #remove end bits
   	end
 
-  	def boundary_correctness (duration)
+  	def boundary_correctness 
   	  #correctness to ground truth, 100ms = 0.1s as one chunk
   	  step_time = 0.1
   	  start_time = 0.0
       end_time = 0.0
       cfa_correct = 0.0
       zcr_correct = 0.0
-      total_tests = (duration-3.0)/step_time
-  	  while end_time < (duration - 3) #remove end bit
+      total_tests = @duration/step_time
+  	  while end_time < @duration 
   	  	end_time = start_time + step_time
         if is_same_type(@ground_truth, @cfa_segments, start_time, end_time)
           cfa_correct += 1.0
@@ -42,6 +43,10 @@ module Smd
   	def is_in(start_time, end_time, range_start, range_end)
   	  (range_start..range_end).cover?(start_time) && (range_start..range_end).cover?(end_time)
   	end
+
+    def boundary_distance
+      
+    end
 
   end
   # file_name = 'results/0bce9608-16c6-4610-a603-03d0d7f982a3'
