@@ -24,20 +24,19 @@ module Smd
         header << avg_CFA
         if header[2] != 'MIXED'
           cfa_percentage = cfa_data.cfa_percentage(header[2])
-          zcr_percentage = zcr_data.zcr_percentage(header[2],header[4])
-
-          header << cfa_percentage
-          header << zcr_percentage
+          zcr_percentage = zcr_data.zcr_percentage(header[2],header[4])        
         else
           cfa_time = cfa_data.cfa_time
           zcr_time = zcr_data.zcr_time(header[4].to_f)
-          mixed_data = MixedAudio.new(CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv','.truth.csv')),
-            cfa_time, zcr_time, header[4].to_f)
-          correctness = mixed_data.boundary_correctness
-          header << correctness
-          header = header.flatten
-          #p header
+          cfa_mixed_data = MixedAudio.new(CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv','.truth.csv')),
+            cfa_time, header[4])
+          cfa_percentage = cfa_mixed_data.boundary_correctness
+          zcr_mixed_data = MixedAudio.new(CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv','.truth.csv')),
+            zcr_time, header[4])
+          zcr_percentage = zcr_mixed_data.boundary_correctness
         end
+        header << cfa_percentage
+        header << zcr_percentage
         music_csv << header
       end
     end
