@@ -48,9 +48,7 @@ module Smd
       end
       avg_distance = (sq_distance.reduce(0.0){ |sum, el| sum + el.to_f }.to_f)**(1/2) / sq_distance.size
       wongly_inserted_bound = @segments.size - sq_distance.size
-      p missing_bound
-      p wongly_inserted_bound
-      p avg_distance
+      return [missing_bound, wongly_inserted_bound, avg_distance]
     end
 
     def boundary_squared_distance(current, real)
