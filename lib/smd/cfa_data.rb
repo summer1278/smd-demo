@@ -72,7 +72,7 @@ module Smd
       else
         segment[0] = temp_start.round(2)
         segment[1] = temp_end.round(2)
-        p segment[1]
+        #p segment[1]
         segments << [segment[0],segment[1],segment[2]]
       end
     end
