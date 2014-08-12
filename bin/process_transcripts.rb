@@ -126,4 +126,4 @@ end
 #download_mp3s
 #compare_filenames
 #generate_truth
-#copy_truth
+copy_truth
