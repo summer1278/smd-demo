@@ -1,6 +1,6 @@
+#$: << 'lib'
 require 'csv'
-$: << 'lib'
-require 'smd'
+#require 'smd'
 
 module Smd
 
@@ -31,8 +31,7 @@ module Smd
   	  end
   	  cfa_percentage = cfa_correct/total_tests
       zcr_percentage = zcr_correct/total_tests
-      p cfa_percentage
-      p zcr_percentage
+      return [cfa_percentage, zcr_percentage]
   	end
 
     def is_same_type(truth, segments, start_time, end_time)
@@ -45,12 +44,12 @@ module Smd
   	end
 
   end
-  file_name = 'results/0bce9608-16c6-4610-a603-03d0d7f982a3'
-  cfa = Smd::CfaData.new(File.open(file_name+'.mp3.cfa.csv').to_a, 2.2)
-  cfa_time = cfa.cfa_time
-  zcr = Smd::ZcrData.new(CSV.read(file_name+'.mp3.bbc-segments.csv').flatten.compact)
-  zcr_time = zcr.zcr_time(2148)
-  ma = MixedAudio.new CSV.read(file_name+'.truth.csv'),cfa_time,zcr_time
-  ma.boundary_correctness(2148)
+  # file_name = 'results/0bce9608-16c6-4610-a603-03d0d7f982a3'
+  # cfa = CfaData.new(File.open(file_name+'.mp3.cfa.csv').to_a, 2.2)
+  # cfa_time = cfa.cfa_time
+  # zcr = ZcrData.new(CSV.read(file_name+'.mp3.bbc-segments.csv').flatten.compact)
+  # zcr_time = zcr.zcr_time(2148)
+  # ma = MixedAudio.new CSV.read(file_name+'.truth.csv'),cfa_time,zcr_time
+  # ma.boundary_correctness(2148)
 
 end

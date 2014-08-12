@@ -16,20 +16,28 @@ module Smd
       CSV.open(@result_directory+'/mp3_output.csv', 'w') do |music_csv|
         music_csv << ['Title', 'Artist', 'Type', 'Genre', 'Duration(in secs)', 'Average CFA', 'CFA correct percentage', 'ZCR correct percentage']
         Dir.glob(@result_directory+'/**/*.cfa.csv') do |cfa_csv_file|
-        #file = File.open(cfa_csv_file)
-        
-        cfa_data = CfaData.new(File.open(cfa_csv_file).to_a, 2.2) #threshold = 2.2
-        avg_CFA = cfa_data.avg_cfa
 
         header = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv', '.metadata.csv')).first
-        cfa_percentage = cfa_data.cfa_percentage(header[2])
-        
+        cfa_data = CfaData.new(File.open(cfa_csv_file).to_a, 2.2) #threshold = 2.2
         zcr_data = ZcrData.new(CSV.read(cfa_csv_file.gsub('.cfa.csv', '.bbc-segments.csv')).flatten.compact)
-        zcr_percentage = zcr_data.zcr_percentage(header[2],header[4])
-
+        avg_CFA = cfa_data.avg_cfa
         header << avg_CFA
-        header << cfa_percentage
-        header << zcr_percentage
+        if header[2] != 'MIXED'
+          cfa_percentage = cfa_data.cfa_percentage(header[2])
+          zcr_percentage = zcr_data.zcr_percentage(header[2],header[4])
+
+          header << cfa_percentage
+          header << zcr_percentage
+        else
+          cfa_time = cfa_data.cfa_time
+          zcr_time = zcr_data.zcr_time(header[4].to_f)
+          mixed_data = MixedAudio.new(CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv','.truth.csv')),
+            cfa_time, zcr_time)
+          correctness = mixed_data.boundary_correctness(header[4].to_f)
+          header << correctness
+          header = header.flatten
+          p header
+        end
         music_csv << header
       end
     end
