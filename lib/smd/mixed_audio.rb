@@ -21,7 +21,7 @@ module Smd
   	  while end_time < @duration 
   	  	end_time = start_time + step_time
         if is_same_type(@ground_truth, @segments, start_time, end_time)
-          cfa_correct += 1.0
+          correct += 1.0
         end
         start_time += step_time
   	  end
@@ -31,20 +31,22 @@ module Smd
 
     def boundary_search
       missing_bound = 0
+      slot = 2.0
       sq_distance = []
+      p @ground_truth.size
       @ground_truth.each do |boundary|
-        interval_start = ( ((boundary[0]-2) if boundary[0]>2) or 0.0 )
-        interval_end = ( ((boundary[0]+2) if boundary[0]>2) or @duration )
+        interval_start = ( ((boundary[0].to_f-slot) if boundary[0].to_f>slot) or 0.0 )
+        interval_end = ( ((boundary[0].to_f+slot) if boundary[0].to_f+slot<@duration) or @duration )
         found = boundary_found(@segments, boundary[2], interval_start, interval_end)
         if found.empty?
           missing_bound += 1
         elsif found.size == 1 
-          sq_distance << boundary_squared_distance(found.flatten[0], boundary[0])
+          sq_distance << boundary_squared_distance(found.flatten[0].to_f, boundary[0].to_f)
         else
-          sq_distance << found.collect{|seg| boundary_squared_distance(seg[0])}.min
+          sq_distance << found.collect{|seg| boundary_squared_distance(seg[0].to_f, boundary[0].to_f)}.min
         end
       end
-      p sq_distance
+      p (sq_distance.reduce(0.0){ |sum, el| sum + el.to_f }.to_f)**(1/2) / sq_distance.size
       p missing_bound
     end
 

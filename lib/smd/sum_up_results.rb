@@ -34,6 +34,8 @@ module Smd
           zcr_mixed_data = MixedAudio.new(CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv','.truth.csv')),
             zcr_time, header[4])
           zcr_percentage = zcr_mixed_data.boundary_correctness
+          cfa_mixed_data.boundary_search
+          zcr_mixed_data.boundary_search
         end
         header << cfa_percentage
         header << zcr_percentage
