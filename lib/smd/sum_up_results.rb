@@ -36,7 +36,7 @@ module Smd
           correctness = mixed_data.boundary_correctness(header[4].to_f)
           header << correctness
           header = header.flatten
-          p header
+          #p header
         end
         music_csv << header
       end
