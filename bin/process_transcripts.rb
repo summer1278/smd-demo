@@ -100,11 +100,11 @@ def generate_truth
       segments << segment
     end
    end
-end
   #pp segments
   CSV.open('/data/speech/desert-island-discs/'+file_name, 'w') do |csv_file|
     segments.each {|row| csv_file<<row}
   end
+end
 end
 
 def copy_truth
@@ -125,5 +125,5 @@ end
 #convert_csvs
 #download_mp3s
 #compare_filenames
-generate_truth
-copy_truth
+#generate_truth
+#copy_truth
