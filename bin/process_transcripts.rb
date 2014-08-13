@@ -64,7 +64,7 @@ def time_to_seconds ( time )
 end
 
 def generate_truth 
- Dir.glob('/data/speech/desert-island-discs-transcripts/Ian_Bostridge_8f8460e3.csv') do |transcript|
+ Dir.glob('/data/speech/desert-island-discs-transcripts/*.csv') do |transcript|
   file = CSV.read(transcript)
   file_name =file[6][1] + '.truth.csv'
     if file_name.include?('.mp3')
@@ -125,5 +125,5 @@ end
 #convert_csvs
 #download_mp3s
 #compare_filenames
-generate_truth
-#copy_truth
+#generate_truth
+copy_truth
