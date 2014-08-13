@@ -125,5 +125,5 @@ end
 #convert_csvs
 #download_mp3s
 #compare_filenames
-generate_truth
-#copy_truth
+#generate_truth
+copy_truth
