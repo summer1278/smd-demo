@@ -23,7 +23,7 @@ module Smd
         Dir.glob(@result_directory+'/**/*.cfa.csv') do |cfa_csv_file|
 
         header = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv', '.metadata.csv')).first
-        cfa_data = CfaData.new(File.open(cfa_csv_file).to_a, 2.2, 1024,512) #threshold = 2.2
+        cfa_data = CfaData.new(File.open(cfa_csv_file).to_a, 2.2, 128,64) #threshold = 2.2
         zcr_data = ZcrData.new(CSV.read(cfa_csv_file.gsub('.cfa.csv', '.bbc-segments.csv')).flatten.compact)
         #avg_CFA = cfa_data.avg_cfa
         #header << avg_CFA

@@ -1,6 +1,6 @@
-#$: << 'lib'
+$: << 'lib'
 require 'csv'
-#require 'smd'
+require 'smd'
 
 module Smd
 
@@ -48,6 +48,8 @@ module Smd
       end
       avg_distance = (sq_distance.reduce(0.0){ |sum, el| sum + el.to_f }.to_f)**(1/2) / sq_distance.size
       wongly_inserted_bound = @segments.size - sq_distance.size
+      #p wongly_inserted_bound
+      #p missing_bound
       return [missing_bound, wongly_inserted_bound, avg_distance]
     end
 
@@ -70,11 +72,11 @@ module Smd
     end
 
   end
-  # file_name = 'results/0bce9608-16c6-4610-a603-03d0d7f982a3'
-  # cfa = CfaData.new(File.open(file_name+'.mp3.cfa.csv').to_a, 2.2)
+  # file_name = 'results/2a27f3d0-f5e6-4417-a703-c8805e1728d8'
+  # cfa = CfaData.new(File.open(file_name+'.mp3.cfa.csv').to_a, 2.2,128,64)
   # cfa_time = cfa.cfa_time
   # zcr = ZcrData.new(CSV.read(file_name+'.mp3.bbc-segments.csv').flatten.compact)
   # zcr_time = zcr.zcr_time(2148)
-  # ma = MixedAudio.new CSV.read(file_name+'.truth.csv'),cfa_time,zcr_time,2148
-  # ma.boundary_correctness
+  # ma = MixedAudio.new CSV.read(file_name+'.truth.csv'),cfa_time,2148
+  # ma.boundary_search
 end

@@ -95,7 +95,7 @@ module Smd
   end
 
 end
-# cfa = CfaData.new File.open('results/test/512/lala/0bce9608-16c6-4610-a603-03d0d7f982a3.mp3.cfa.csv').to_a, 2.2,512.0,256.0
+# cfa = CfaData.new File.open('results/0bce9608-16c6-4610-a603-03d0d7f982a3.mp3.cfa.csv').to_a, 2.2,128,64
 # segments = cfa.cfa_time
 # CSV.open('results/test.csv', 'w') do |csv_file|
 #       segments.each {|row| csv_file<<row}
