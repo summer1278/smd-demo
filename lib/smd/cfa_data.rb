@@ -4,9 +4,11 @@ require 'pp'
 module Smd
 
   class CfaData
-    def initialize( data, threshold )
+    def initialize( data, threshold, window_size, window_step_size)
       @data = data
       @threshold = threshold
+      @window_size = window_size
+      @window_step_size = window_step_size
     end
 
     def avg_cfa
@@ -31,9 +33,9 @@ module Smd
     end
   end
   
-  def cfa_time
+  def cfa_time 
     total_segments = @data.size
-    time_slot = time_of_one_block(1024.0, 11025.0, 100.0, 512.0)
+    time_slot = time_of_one_block(@window_size, 11025.0, 100.0, @window_step_size)
     time_start_offset = time_slot * 0.25
     time_end_offset = time_slot * 0.25
 
@@ -47,7 +49,7 @@ module Smd
       line_num = line_num + 1
 
       num_frames   = num_frames_in_a_block( line_num, 100.0, 50.0 )
-      num_samples = num_samples_in_a_window( num_frames, 1024.0, 512.0 ) 
+      num_samples = num_samples_in_a_window( num_frames, @window_size, @window_step_size) 
       time_in_sec = num_samples / 11025.0
       
       if number == 1
