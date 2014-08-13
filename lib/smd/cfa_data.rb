@@ -7,8 +7,8 @@ module Smd
     def initialize( data, threshold, window_size, window_step_size)
       @data = data
       @threshold = threshold
-      @window_size = window_size
-      @window_step_size = window_step_size
+      @window_size = window_size.to_f
+      @window_step_size = window_step_size.to_f
     end
 
     def avg_cfa
@@ -38,7 +38,7 @@ module Smd
     time_slot = time_of_one_block(@window_size, 11025.0, 100.0, @window_step_size)
     time_start_offset = time_slot * 0.25
     time_end_offset = time_slot * 0.25
-
+    #p time_slot
     line_num = 0.0
 
     segments = [ ]
@@ -74,8 +74,8 @@ module Smd
       else
         segment[0] = temp_start.round(2)
         segment[1] = temp_end.round(2)
-        #p segment[1]
-        segments << [segment[0],segment[1],segment[2]]
+        #p segment[0..1]
+        segments << segment[0..2]
       end
     end
     #pp segments
@@ -95,7 +95,7 @@ module Smd
   end
 
 end
-# cfa = CfaData.new File.open('results/desert-island-discs/0bce9608-16c6-4610-a603-03d0d7f982a3.mp3.cfa.csv').to_a, 2.2
+# cfa = CfaData.new File.open('results/test/512/lala/0bce9608-16c6-4610-a603-03d0d7f982a3.mp3.cfa.csv').to_a, 2.2,512.0,256.0
 # segments = cfa.cfa_time
 # CSV.open('results/test.csv', 'w') do |csv_file|
 #       segments.each {|row| csv_file<<row}
