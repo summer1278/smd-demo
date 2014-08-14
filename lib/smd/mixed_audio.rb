@@ -33,6 +33,7 @@ module Smd
       missing_bound = 0
       slot = 2.0
       sq_distance = []
+      unselected_seg = @segments
       @ground_truth.each do |boundary|
         interval_start = ( ((boundary[0].to_f-slot) if boundary[0].to_f>slot) or 0.0 )
         interval_end = ( ((boundary[0].to_f+slot) if boundary[0].to_f+slot<@duration) or @duration )
@@ -42,12 +43,17 @@ module Smd
           #p boundary
         elsif found.size == 1 
           sq_distance << boundary_squared_distance(found.flatten[0].to_f, boundary[0].to_f)
+          unselected_seg.delete(found)
+          #p unselected_seg
         else
           sq_distance << found.collect{|seg| boundary_squared_distance(seg[0].to_f, boundary[0].to_f)}.min
+          selected = found.select{|seg| boundary_squared_distance(seg[0].to_f, boundary[0].to_f)}.min
+          unselected_seg.delete(selected)
+          #p unselected_seg
         end
       end
       avg_distance = (sq_distance.reduce(0.0){ |sum, el| sum + el.to_f }.to_f)**(1/2) / sq_distance.size
-      wongly_inserted_bound = @segments.size - sq_distance.size
+      wongly_inserted_bound = unselected_seg.size
       #p wongly_inserted_bound
       #p missing_bound
       return [missing_bound, wongly_inserted_bound, avg_distance]
