@@ -1,6 +1,6 @@
-$: << 'lib'
+#$: << 'lib'
 require 'csv'
-require 'smd'
+#require 'smd'
 
 module Smd
 
