@@ -5,13 +5,13 @@ Supported by UCL CS & BBC R&amp;D, MSc Project in 2014 Summer
 1. Visualization of speech music discriminator
 2. Gather results from a large dataset
 3. Pure music/speech: correctness percentage comparison
-4. Mixed music&speech: time boundary (percentage) VS ground truth
+4. Mixed music&speech: time boundary VS ground truth
 
 
 Json File Attributes
 -----------
-1. startTime: endTime - time_slot //start_offset is + 25% time_slot 
-2. endTime // end_offset is - 25% time_slot
+1. startTime: endTime - time_slot #start_offset is + 25% time_slot 
+2. endTime #end_offset is - 25% time_slot
 3. editable: true 
 4. color: waveform color
 5. labelText: id of segment
