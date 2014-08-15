@@ -5,11 +5,13 @@ $: << 'lib'
 require 'smd'
 require 'optparse'
 
+options = {}
+
 OptionParser.new do |opts|
   opts.banner = "Usage:generate-jsons  [options]"
 
-  opts.on("-o", "--output-dir [DIR]", "Output directory") do |o|
-    options[:output_directory] = o
+  opts.on("-i", "--input-dir [DIR]", "Input directory") do |i|
+    options[:input_directory] = i
   end
 
   opts.on_tail("-h", "--help", "Show this message") do
@@ -18,17 +20,18 @@ OptionParser.new do |opts|
   end
 
 end.parse!
-Dir.glob(@result_directory+'/**/*.cfa.csv') do |cfa_csv_file|
+Dir.glob(options[:input_directory]+'/**/*.cfa.csv') do |cfa_csv_file|
   header = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv', '.metadata.csv')).first
-  cfa_data = CfaData.new(File.open(cfa_csv_file).to_a, 2.2, 1024,512) #threshold = 2.2
-  zcr_data = ZcrData.new(CSV.read(cfa_csv_file.gsub('.cfa.csv', '.bbc-segments.csv')).flatten.compact)
+  cfa_data = Smd::CfaData.new(File.open(cfa_csv_file).to_a, 2.2, 1024,512) #threshold = 2.2
+  zcr_data = Smd::ZcrData.new(CSV.read(cfa_csv_file.gsub('.cfa.csv', '.bbc-segments.csv')).flatten.compact)
   cfa_time = cfa_data.cfa_time
   zcr_time = zcr_data.zcr_time(header[4].to_f)
   truth_time = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv','.truth.csv'))
-  list_to_run << cfa_time
-  list_to_run << zcr_time
-  list_to_run << truth_time
-  list_to_run.each do |time|
-    creater = Smd::GenerateJson.new(time, options[:output_directory], )
-  end
+
+  creater = Smd::GenerateJson.new(cfa_time, cfa_csv_file)
+  creater.generate
+  creater2 = Smd::GenerateJson.new(zcr_time, cfa_csv_file.gsub('.cfa.csv', '.bbc-segments.csv'))
+  creater2.generate
+  creater3 = Smd::GenerateJson.new(truth_time, cfa_csv_file.gsub('.mp3.cfa.csv','.truth.csv'))
+  creater3.generate
 end

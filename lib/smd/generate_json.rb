@@ -1,10 +1,12 @@
+require 'json'
+
 module Smd
   
   class GenerateJson
-  	def initialize(segments, output_directory, file_name)
+  	def initialize(segments, output_directory)
   	  @segments = segments
   	  @output_directory = output_directory
-  	  @file_name = file_name
+  	  #@file_name = file_name
   	end
 
   	def generate
@@ -32,7 +34,7 @@ module Smd
   	end
     
     def write_json(list)
-      File.open(@output_directory+@file_name+'.json', 'w') do |f|
+      File.open(@output_directory.gsub('.csv','.json'), 'w') do |f|
         f.write(list.to_json)
       end
     end
