@@ -1,0 +1,16 @@
+<html>
+
+  <head>
+    <title><%= @page_title %></title>
+  </head>
+
+  <body>
+    <h1><%= @page_title %> test page </h1>
+    <ul>
+      <% Dir.glob('data/**/*.mp3') do |mp3_file| %>
+      <%= "<li><a href='item/#{File.basename(mp3_file).gsub('.mp3','')}'>#{File.basename(mp3_file)}</a></li>" %>
+       <% end %>
+    </ul>  
+  </body>
+
+</html>
