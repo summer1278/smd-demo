@@ -154,12 +154,12 @@
 
       <div class="grid-row clearfix">
         <div class="grid-col grid-12">
-          <h2>Example Demo</h2>
+          <h2>MP3 File:<%= @uuid %></h2>
           <div id="peaks-container"></div>
           <div class="peaks-control">
             <div class="peaks-audio">
               <audio id="peaks-audio" controls=controls>
-                <source src="audio/test.mp3" type="audio/mpeg">
+                <source src="/<%=Dir.glob('./data/**/'+@uuid+'.mp3')[0]%>" type="audio/mpeg">
                   Your browser does not support the audio element.
                 </audio>
               </div>
@@ -179,15 +179,15 @@
         </div>
       </footer>
       <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-      <script src="bower_components/KineticJS/index.js"></script>
-      <script src="bower_components/requirejs/require.js"></script>
+      <script src="/public/bower_components/KineticJS/index.js"></script>
+      <script src="/public/bower_components/requirejs/require.js"></script>
       <script>
       requirejs.config({
         base: '/',
         paths: {
-          peaks: 'bower_components/peaks.js/src/main',
-          EventEmitter: 'bower_components/eventEmitter/EventEmitter',
-          'waveform-data': 'bower_components/waveform-data/dist/waveform-data.min'
+          peaks: '/public/bower_components/peaks.js/src/main',
+          EventEmitter: '/public/bower_components/eventEmitter/EventEmitter',
+          'waveform-data': '/public/bower_components/waveform-data/dist/waveform-data.min'
         }
       });
 

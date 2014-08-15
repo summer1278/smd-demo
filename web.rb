@@ -19,3 +19,8 @@ get '/data/*' do
   send_file @data_directory + '/' + params[:splat].join('/')
 end
 
+# get '/public/*' do
+#   @data_directory = 'data'
+#   send_file @data_directory + '/' + params[:splat].join('/')
+# end
+
