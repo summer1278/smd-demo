@@ -22,7 +22,7 @@ OptionParser.new do |opts|
 end.parse!
 Dir.glob(options[:input_directory]+'/**/*.cfa.csv') do |cfa_csv_file|
   header = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv', '.metadata.csv')).first
-  cfa_data = Smd::CfaData.new(File.open(cfa_csv_file).to_a, 2.2, 128,64) #threshold = 2.2
+  cfa_data = Smd::CfaData.new(File.open(cfa_csv_file).to_a, 2.2, 1024,512) #threshold = 2.2
   zcr_data = Smd::ZcrData.new(CSV.read(cfa_csv_file.gsub('.cfa.csv', '.bbc-segments.csv')).flatten.compact)
   cfa_time = cfa_data.cfa_time
   zcr_time = zcr_data.zcr_time(header[4].to_f)

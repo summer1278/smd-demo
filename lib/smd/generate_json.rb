@@ -23,8 +23,8 @@ module Smd
         else
 	      color = 'rgba(75, 213, 44, 0.9)' # green for speech
         end
-        data[:startTime] = segment[0]
-        data[:endTime] = segment[1]
+        data[:startTime] = segment[0].to_f
+        data[:endTime] = segment[1].to_f
         data[:editable] = true
         data[:color] = color
         data[:labelText] = "segment#{index}"

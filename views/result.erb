@@ -179,15 +179,15 @@
         </div>
       </footer>
       <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-      <script src="/public/bower_components/KineticJS/index.js"></script>
-      <script src="/public/bower_components/requirejs/require.js"></script>
+      <script src="/bower_components/KineticJS/index.js"></script>
+      <script src="/bower_components/requirejs/require.js"></script>
       <script>
       requirejs.config({
         base: '/',
         paths: {
-          peaks: '/public/bower_components/peaks.js/src/main',
-          EventEmitter: '/public/bower_components/eventEmitter/EventEmitter',
-          'waveform-data': '/public/bower_components/waveform-data/dist/waveform-data.min'
+          peaks: '/bower_components/peaks.js/src/main',
+          EventEmitter: '/bower_components/eventEmitter/EventEmitter',
+          'waveform-data': '/bower_components/waveform-data/dist/waveform-data.min'
         }
       });
 
@@ -200,7 +200,7 @@
 	container: document.getElementById('peaks-container'), // Containing element
 	mediaElement: document.getElementById('peaks-audio'), // HTML5 Audio element for audio track
 	dataUri: {
-   arraybuffer:'audio/test.dat'	
+   arraybuffer:"/<%=Dir.glob('./data/**/'+@uuid+'.dat')[0]%>"
  },
 
  /** Optional config with defaults **/
@@ -216,7 +216,7 @@
 	randomizeSegmentColor: true, // Random colour per segment (overrides segmentColor)
 });
 
-$.getJSON('audio/test.json', function(data) {
+$.getJSON("/<%=Dir.glob('./data/**/'+@uuid+'.truth.json')[0]%>", function(data) {
     p.segments.add(data);
 	  //console.log(data.length);
 });

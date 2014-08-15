@@ -64,7 +64,8 @@ def time_to_seconds ( time )
 end
 
 def generate_truth 
- Dir.glob('/data/speech/desert-island-discs-transcripts/Ian_Bostridge_8f8460e3.csv') do |transcript|
+  #/data/speech/desert-island-discs-transcripts/
+ Dir.glob('results/Michael_Deeley_658c6784.csv') do |transcript|
   file = CSV.read(transcript)
   file_name =file[6][1] + '.truth.csv'
     if file_name.include?('.mp3')
@@ -73,6 +74,7 @@ def generate_truth
   segments = []
   segment = Array.new(3, nil)
   file.drop(14).each do |line|
+    if line[1]<line[2]
     if segments.last && segments.last[1] == time_to_seconds(line[1]) && segments.last[2] == 'Music' &&
       line[3] == nil
       segments.last[1] = time_to_seconds(line[2])
@@ -92,16 +94,17 @@ def generate_truth
         elsif line[3] != nil
           segment[2] = 'Speech'
         end
-      elsif line[3] == nil
+      elsif line[3] == nil && line[1] != nil && line[2] !=nil
         segment[0] = time_to_seconds(line[1])
         segment[1] = time_to_seconds(line[2])
         segment[2] = 'Music'
       end
       segments << segment
+      end
     end
    end
-  #pp segments
-  CSV.open('/data/speech/desert-island-discs/'+file_name, 'w') do |csv_file|
+  #/data/speech/desert-island-discs/
+  CSV.open('results/'+file_name, 'w') do |csv_file|
     segments.each {|row| csv_file<<row}
   end
 end
@@ -125,5 +128,5 @@ end
 #convert_csvs
 #download_mp3s
 #compare_filenames
-#generate_truth
-copy_truth
+generate_truth
+#copy_truth
