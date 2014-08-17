@@ -59,13 +59,13 @@ end
 
 def time_to_seconds ( time )
   if dt = DateTime.parse(time) rescue false 
-   dt.hour * 3600 + dt.min * 60 +dt.sec
+   dt.hour * 3600.0 + dt.min * 60.0 +dt.sec
  end
 end
 
 def generate_truth 
   #/data/speech/desert-island-discs-transcripts/
- Dir.glob('results/Michael_Deeley_658c6784.csv') do |transcript|
+ Dir.glob('results/transcript-csv/*.csv') do |transcript|
   file = CSV.read(transcript)
   file_name =file[6][1] + '.truth.csv'
     if file_name.include?('.mp3')
@@ -74,7 +74,8 @@ def generate_truth
   segments = []
   segment = Array.new(3, nil)
   file.drop(14).each do |line|
-    if line[1]<line[2]
+    #p time_to_seconds(line[1])
+    if time_to_seconds(line[1])!=nil && time_to_seconds(line[2])!=nil && time_to_seconds(line[1])<time_to_seconds(line[2])
     if segments.last && segments.last[1] == time_to_seconds(line[1]) && segments.last[2] == 'Music' &&
       line[3] == nil
       segments.last[1] = time_to_seconds(line[2])
@@ -104,23 +105,33 @@ def generate_truth
     end
    end
   #/data/speech/desert-island-discs/
-  CSV.open('results/'+file_name, 'w') do |csv_file|
+  CSV.open('results/new_truth/'+file_name, 'w') do |csv_file|
     segments.each {|row| csv_file<<row}
   end
 end
 end
 
-def copy_truth
-  Dir.glob('/data/results/speech/desert-island-discs/*.txt') do |txt_file|
-    path = File.read(txt_file)
-    #p path
-    file_name = File.basename(path).gsub(".mp3\n",".truth.csv")
-    #p file_name
-    #new_file =File.join(txt_file.gsub('.orig.txt','.truth.csv'))
-    FileUtils.cp('/data/incoming/'+file_name ,txt_file.gsub('.orig.txt','.truth.csv'))
-  end
-end
+# def copy_truth
+#   Dir.glob('/data/results/speech/desert-island-discs/*.txt') do |txt_file|
+#     path = File.read(txt_file)
+#     #p path
+#     file_name = File.basename(path).gsub(".mp3\n",".truth.csv")
+#     #p file_name
+#     #new_file =File.join(txt_file.gsub('.orig.txt','.truth.csv'))
+#     FileUtils.cp('/data/incoming/'+file_name ,txt_file.gsub('.orig.txt','.truth.csv'))
+#   end
+# end
 
+# def copy_truth
+#   Dir.glob('results/testdie/*.bbc-segments.csv') do |txt_file|
+#     path = CSV.read(txt_file).flatten.compact[0]
+#     #p path
+#     file_name = File.basename(path).gsub(".mp3",".truth.csv")
+#     #p file_name
+#     #new_file =File.join(txt_file.gsub('.orig.txt','.truth.csv'))
+#     FileUtils.cp('results/new_truth/'+file_name ,'results/testdie/'+File.basename(txt_file).gsub('.mp3.bbc-segments.csv','.truth.csv'))
+#   end
+# end
 
 
 
