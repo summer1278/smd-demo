@@ -17,8 +17,8 @@
 <body>
   <h1><%= @page_title %></h1>
   <ul>
-    <% Dir.glob('data/**/*.mp3') do |mp3_file| %>
-    <%= "<li><a href='item/#{File.basename(mp3_file).gsub('.mp3','')}'>#{File.basename(mp3_file)}</a></li>" %>
+    <% Dir.glob(@input_directory+'*.mp3') do |mp3_file| %>
+    <%= "<li><a href='item/#{File.basename(mp3_file).gsub('.mp3','')}'>#{File.basename(mp3_file)}</a>  <a href='item/#{File.basename(mp3_file).gsub('.mp3','')}/ground-truth'>ground-truth</a>  <a href='item/#{File.basename(mp3_file).gsub('.mp3','')}/cfa'>cfa</a>  <a href='item/#{File.basename(mp3_file).gsub('.mp3','')}/zcr'>zcr</a></li>"%>
     <% end %>
   </ul>  
 </body>
