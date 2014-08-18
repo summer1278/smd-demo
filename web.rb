@@ -1,17 +1,19 @@
 require 'rubygems'
 require 'sinatra'
 
+input_directory = './data/**/'
+
 # Index Page
 get '/' do
   @page_title = 'Radio List'
-  @input_directory = './data/**/'
+  @input_directory = input_directory
   erb(:index) 
 end
 
 # Combined Results page
 get '/item/:uuid' do
   @uuid = params['uuid']
-  @input_directory = './data/**/'
+  @input_directory = input_directory
   erb(:result)
 end
 
@@ -19,7 +21,7 @@ end
 get '/item/:uuid/:type' do
   @uuid = params['uuid']
   @type = params['type']
-  @input_directory = './data/**/'
+  @input_directory = input_directory
   erb(:single_result)
 end
 
