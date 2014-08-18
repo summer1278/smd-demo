@@ -3,7 +3,7 @@ require 'sinatra'
 
 # Index Page
 get '/' do
-  @page_title = 'MP3 list'
+  @page_title = 'Radio lIST'
   erb(:index) 
 end
 
@@ -18,9 +18,3 @@ get '/data/*' do
   @data_directory = 'data'
   send_file @data_directory + '/' + params[:splat].join('/')
 end
-
-# get '/public/*' do
-#   @data_directory = 'data'
-#   send_file @data_directory + '/' + params[:splat].join('/')
-# end
-

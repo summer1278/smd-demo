@@ -55,6 +55,45 @@
   #peaks-container > div > div:last-child {
     margin: 0;
   }
+  #peaks-container1 {
+    width: 100%;
+    /*height: 400px;*/
+    margin: 12px auto;
+  }
+
+  #peaks-container1 > div > div {
+    height: 200px;
+    margin: 0 0 6px 0;
+    background-color: #fefefe;
+    border: 1px solid #eaeaea;
+    -webkit-box-shadow: 0 0 3px #a0a0a0;
+    -moz-box-shadow: 0 0 3px #a0a0a0;
+    box-shadow: 0 0 3px #a0a0a0;
+  }
+
+  #peaks-container1 > div > div:last-child {
+    margin: 0;
+  }
+
+  #peaks-container2 {
+    width: 100%;
+    /*height: 400px;*/
+    margin: 12px auto;
+  }
+
+  #peaks-container2 > div > div {
+    height: 200px;
+    margin: 0 0 6px 0;
+    background-color: #fefefe;
+    border: 1px solid #eaeaea;
+    -webkit-box-shadow: 0 0 3px #a0a0a0;
+    -moz-box-shadow: 0 0 3px #a0a0a0;
+    box-shadow: 0 0 3px #a0a0a0;
+  }
+
+  #peaks-container2 > div > div:last-child {
+    margin: 0;
+  }
 
   .introduction > * {
     margin-left: 8px !important;
@@ -154,83 +193,171 @@
 
       <div class="grid-row clearfix">
         <div class="grid-col grid-12">
-          <h2>MP3 File:<%= @uuid %></h2>
+          <h2><%require 'csv'%><%=CSV.read(Dir.glob('./data/**/'+@uuid+'.metadata.csv')[0]).first[0]%></h2>
           <div id="peaks-container"></div>
+          <h3>CFA</h3>
+          <div id="peaks-container1"></div>
+          <h3>ZCR</h3>
+          <div id="peaks-container2"></div>
           <div class="peaks-control">
-            <div class="peaks-audio">
-              <audio id="peaks-audio" controls=controls>
-                <source src="/<%=Dir.glob('./data/**/'+@uuid+'.mp3')[0]%>" type="audio/mpeg">
-                  Your browser does not support the audio element.
-                </audio>
-              </div>
-              <button id="zoomIn" class="button">Zoom In</button>
-              <button id="zoomOut" class="button">Zoom Out</button>
-              <button id="segment" class="button">Create Segment</button>
-            </div>
+          <div class="peaks-audio">
+          <audio id="peaks-audio" controls=controls>
+          <source src="/<%=Dir.glob('./data/**/'+@uuid+'.mp3')[0]%>" type="audio/mpeg">
+          Your browser does not support the audio element.
+          </audio>
+          </div>
+          <button id="zoomIn" class="button">Zoom In</button>
+          <button id="zoomOut" class="button">Zoom Out</button>
+          <button id="segment" class="button">Create Segment</button>
+          </div>
           </div><!-- .grid-12 -->
-        </div><!-- .grid-row -->
+          </div><!-- .grid-row -->
 
-      </div><!-- .grid -->
+          </div><!-- .grid -->
 
-      <footer class="masthead">
-        <div class="grid">
+          <footer class="masthead">
+          <div class="grid">
           <span>&copy; Copyright 2014 BBC Research and Development</span>
-          <span class="audio_licence"><img src="http://waveform.prototyping.bbc.co.uk/cc-logo.png" alt="" height="36">The audio in this demo is taken from the <a href=" http://www.bbc.co.uk/programmes/b0474yct">BBC Radio 4</a>, used under the terms of the <a href="http://creativecommons.org/licenses/by-nc-sa/2.0/uk/">Creative Commons Attribution-NonCommercial-ShareAlike 2.0 UK: England &amp; Wales license</a>.</span>
-        </div>
-      </footer>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-      <script src="/bower_components/KineticJS/index.js"></script>
-      <script src="/bower_components/requirejs/require.js"></script>
-      <script>
-      requirejs.config({
-        base: '/',
-        paths: {
-          peaks: '/bower_components/peaks.js/src/main',
-          EventEmitter: '/bower_components/eventEmitter/EventEmitter',
-          'waveform-data': '/bower_components/waveform-data/dist/waveform-data.min'
-        }
-      });
+          <span class="audio_licence"><img src="http://waveform.prototyping.bbc.co.uk/cc-logo.png" alt="" height="36">The audio in this demo is taken from the <a href=" http://www.bbc.co.uk/programmes/b006qnmr">BBC Radio 4</a>, used under the terms of the <a href="http://creativecommons.org/licenses/by-nc-sa/2.0/uk/">Creative Commons Attribution-NonCommercial-ShareAlike 2.0 UK: England &amp; Wales license</a>.</span>
+          </div>
+          </footer>
+          <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+          <script src="/bower_components/KineticJS/index.js"></script>
+          <script src="/bower_components/requirejs/require.js"></script>
+          <script>
+          requirejs.config({
+            base: '/',
+            paths: {
+              peaks: '/bower_components/peaks.js/src/main',
+              EventEmitter: '/bower_components/eventEmitter/EventEmitter',
+              'waveform-data': '/bower_components/waveform-data/dist/waveform-data.min'
+            }
+            });
 
-      require(['peaks'], function (Peaks) {
-        
+          require(['peaks'], function (Peaks) {
 
-        var p = Peaks.init({
-          
-         /** REQUIRED OPTIONS **/
-	container: document.getElementById('peaks-container'), // Containing element
-	mediaElement: document.getElementById('peaks-audio'), // HTML5 Audio element for audio track
-	dataUri: {
-   arraybuffer:"/<%=Dir.glob('./data/**/'+@uuid+'.dat')[0]%>"
- },
 
- /** Optional config with defaults **/
-	height: 200, // height of the waveform canvases in pixels
-	zoomLevels: [512, 1024, 2048, 4096], // Array of zoom levels in samples per pixel (big >> small)
-	keyboard: false, // Bind keyboard controls
-	nudgeIncrement: 0.01, // Keyboard nudge increment in seconds (left arrow/right arrow)
-	inMarkerColor: '#a0a0a0', // Colour for the in marker of segments
-	outMarkerColor: '#a0a0a0', // Colour for the out marker of segments
-	zoomWaveformColor: 'rgba(0, 225, 128, 1)', // Colour for the zoomed in waveform
-	overviewWaveformColor: 'rgba(0,0,0,0.2)', // Colour for the overview waveform
-	segmentColor: 'rgba(255, 161, 39, 1)', // Colour for segments on the waveform
-	randomizeSegmentColor: true, // Random colour per segment (overrides segmentColor)
-});
+            var p = Peaks.init({
 
-$.getJSON("/<%=Dir.glob('./data/**/'+@uuid+'.truth.json')[0]%>", function(data) {
-    p.segments.add(data);
-	  //console.log(data.length);
-});
+             /** REQUIRED OPTIONS **/
+             container: document.getElementById('peaks-container'), // Containing element
+             mediaElement: document.getElementById('peaks-audio'), // HTML5 Audio element for audio track
+             dataUri: {
+               arraybuffer:"/<%=Dir.glob('./data/**/'+@uuid+'.dat')[0]%>"
+               },
 
-$("#zoomIn").on("click", p.zoom.zoomIn);
-$("#zoomOut").on("click", p.zoom.zoomOut);
-$("#segment").on("click", function (event) {
-	startTime = p.time.getCurrentTime();
-	endTime = startTime + 10;
-	segmentEditable = true;
-	p.segments.add(startTime, endTime, segmentEditable);
-});
+               /** Optional config with defaults **/
+               height: 200, // height of the waveform canvases in pixels
+               zoomLevels: [512, 1024, 2048, 4096], // Array of zoom levels in samples per pixel (big >> small)
+               keyboard: false, // Bind keyboard controls
+               nudgeIncrement: 0.01, // Keyboard nudge increment in seconds (left arrow/right arrow)
+               inMarkerColor: '#a0a0a0', // Colour for the in marker of segments
+               outMarkerColor: '#a0a0a0', // Colour for the out marker of segments
+               zoomWaveformColor: 'rgba(0, 225, 128, 1)', // Colour for the zoomed in waveform
+               overviewWaveformColor: 'rgba(0,0,0,0.2)', // Colour for the overview waveform
+               segmentColor: 'rgba(255, 161, 39, 1)', // Colour for segments on the waveform
+               randomizeSegmentColor: true, // Random colour per segment (overrides segmentColor)
+               });
 
-});
-</script>
-</body>
+            p.on('segments.ready', function(){
+
+              $.getJSON("/<%=Dir.glob('./data/**/'+@uuid+'.truth.json')[0]%>", function(data) {
+                p.segments.add(data);
+                //console.log(data.length);
+                });
+              });
+
+
+            $("#zoomIn").on("click", p.zoom.zoomIn);
+            $("#zoomOut").on("click", p.zoom.zoomOut);
+            $("#segment").on("click", function (event) {
+            	startTime = p.time.getCurrentTime();
+            	endTime = startTime + 10;
+            	segmentEditable = true;
+            	p.segments.add(startTime, endTime, segmentEditable);
+              });
+
+            var p1 = Peaks.init({
+
+             /** REQUIRED OPTIONS **/
+             container: document.getElementById('peaks-container1'), // Containing element
+             mediaElement: document.getElementById('peaks-audio'), // HTML5 Audio element for audio track
+             dataUri: {
+               arraybuffer:"/<%=Dir.glob('./data/**/'+@uuid+'.dat')[0]%>"
+               },
+
+               /** Optional config with defaults **/
+               height: 200, // height of the waveform canvases in pixels
+               zoomLevels: [512, 1024, 2048, 4096], // Array of zoom levels in samples per pixel (big >> small)
+               keyboard: false, // Bind keyboard controls
+               nudgeIncrement: 0.01, // Keyboard nudge increment in seconds (left arrow/right arrow)
+               inMarkerColor: '#a0a0a0', // Colour for the in marker of segments
+               outMarkerColor: '#a0a0a0', // Colour for the out marker of segments
+               zoomWaveformColor: 'rgba(0, 225, 128, 1)', // Colour for the zoomed in waveform
+               overviewWaveformColor: 'rgba(0,0,0,0.2)', // Colour for the overview waveform
+               segmentColor: 'rgba(255, 161, 39, 1)', // Colour for segments on the waveform
+               randomizeSegmentColor: true, // Random colour per segment (overrides segmentColor)
+               });
+
+            p1.on('segments.ready', function(){
+
+              $.getJSON("/<%=Dir.glob('./data/**/'+@uuid+'.mp3.cfa.json')[0]%>", function(data) {
+                p1.segments.add(data);
+                //console.log(data.length);
+                });
+              });
+
+
+            $("#zoomIn").on("click", p1.zoom.zoomIn);
+            $("#zoomOut").on("click", p1.zoom.zoomOut);
+            $("#segment").on("click", function (event) {
+              startTime = p1.time.getCurrentTime();
+              endTime = startTime + 10;
+              segmentEditable = true;
+              p1.segments.add(startTime, endTime, segmentEditable);
+              });
+
+            var p2 = Peaks.init({
+
+             /** REQUIRED OPTIONS **/
+             container: document.getElementById('peaks-container2'), // Containing element
+             mediaElement: document.getElementById('peaks-audio'), // HTML5 Audio element for audio track
+             dataUri: {
+               arraybuffer:"/<%=Dir.glob('./data/**/'+@uuid+'.dat')[0]%>"
+               },
+
+               /** Optional config with defaults **/
+               height: 200, // height of the waveform canvases in pixels
+               zoomLevels: [512, 1024, 2048, 4096], // Array of zoom levels in samples per pixel (big >> small)
+               keyboard: false, // Bind keyboard controls
+               nudgeIncrement: 0.01, // Keyboard nudge increment in seconds (left arrow/right arrow)
+               inMarkerColor: '#a0a0a0', // Colour for the in marker of segments
+               outMarkerColor: '#a0a0a0', // Colour for the out marker of segments
+               zoomWaveformColor: 'rgba(0, 225, 128, 1)', // Colour for the zoomed in waveform
+               overviewWaveformColor: 'rgba(0,0,0,0.2)', // Colour for the overview waveform
+               segmentColor: 'rgba(255, 161, 39, 1)', // Colour for segments on the waveform
+               randomizeSegmentColor: true, // Random colour per segment (overrides segmentColor)
+               });
+
+            p2.on('segments.ready', function(){
+
+              $.getJSON("/<%=Dir.glob('./data/**/'+@uuid+'.mp3.bbc-segments.json')[0]%>", function(data) {
+                p2.segments.add(data);
+                //console.log(data.length);
+                });
+              });
+
+
+            $("#zoomIn").on("click", p2.zoom.zoomIn);
+            $("#zoomOut").on("click", p2.zoom.zoomOut);
+            $("#segment").on("click", function (event) {
+              startTime = p2.time.getCurrentTime();
+              endTime = startTime + 10;
+              segmentEditable = true;
+              p2.segments.add(startTime, endTime, segmentEditable);
+              });
+
+            });
+          </script>
+      </body>
 </html>
