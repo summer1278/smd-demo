@@ -193,7 +193,7 @@
 
       <div class="grid-row clearfix">
         <div class="grid-col grid-12">
-          <h2><%require 'csv'%><%=CSV.read(Dir.glob('./data/**/'+@uuid+'.metadata.csv')[0]).first[0]%></h2>
+          <h2><%require 'csv'%><%=CSV.read(Dir.glob(@input_directory+@uuid+'.metadata.csv')[0]).first[0]%></h2>
           <div id="peaks-container"></div>
           <h3>CFA</h3>
           <div id="peaks-container1"></div>
@@ -202,7 +202,7 @@
           <div class="peaks-control">
           <div class="peaks-audio">
           <audio id="peaks-audio" controls=controls>
-          <source src="/<%=Dir.glob('./data/**/'+@uuid+'.mp3')[0]%>" type="audio/mpeg">
+          <source src="/<%=Dir.glob(@input_directory+@uuid+'.mp3')[0]%>" type="audio/mpeg">
           Your browser does not support the audio element.
           </audio>
           </div>
@@ -243,7 +243,7 @@
              container: document.getElementById('peaks-container'), // Containing element
              mediaElement: document.getElementById('peaks-audio'), // HTML5 Audio element for audio track
              dataUri: {
-               arraybuffer:"/<%=Dir.glob('./data/**/'+@uuid+'.dat')[0]%>"
+               arraybuffer:"/<%=Dir.glob(@input_directory+@uuid+'.dat')[0]%>"
                },
 
                /** Optional config with defaults **/
@@ -261,7 +261,7 @@
 
             p.on('segments.ready', function(){
 
-              $.getJSON("/<%=Dir.glob('./data/**/'+@uuid+'.truth.json')[0]%>", function(data) {
+              $.getJSON("/<%=Dir.glob(@input_directory+@uuid+'.truth.json')[0]%>", function(data) {
                 p.segments.add(data);
                 //console.log(data.length);
                 });
@@ -283,7 +283,7 @@
              container: document.getElementById('peaks-container1'), // Containing element
              mediaElement: document.getElementById('peaks-audio'), // HTML5 Audio element for audio track
              dataUri: {
-               arraybuffer:"/<%=Dir.glob('./data/**/'+@uuid+'.dat')[0]%>"
+               arraybuffer:"/<%=Dir.glob(@input_directory+@uuid+'.dat')[0]%>"
                },
 
                /** Optional config with defaults **/
@@ -301,7 +301,7 @@
 
             p1.on('segments.ready', function(){
 
-              $.getJSON("/<%=Dir.glob('./data/**/'+@uuid+'.mp3.cfa.json')[0]%>", function(data) {
+              $.getJSON("/<%=Dir.glob(@input_directory+@uuid+'.mp3.cfa.json')[0]%>", function(data) {
                 p1.segments.add(data);
                 //console.log(data.length);
                 });
@@ -323,7 +323,7 @@
              container: document.getElementById('peaks-container2'), // Containing element
              mediaElement: document.getElementById('peaks-audio'), // HTML5 Audio element for audio track
              dataUri: {
-               arraybuffer:"/<%=Dir.glob('./data/**/'+@uuid+'.dat')[0]%>"
+               arraybuffer:"/<%=Dir.glob(@input_directory+@uuid+'.dat')[0]%>"
                },
 
                /** Optional config with defaults **/
@@ -341,7 +341,7 @@
 
             p2.on('segments.ready', function(){
 
-              $.getJSON("/<%=Dir.glob('./data/**/'+@uuid+'.mp3.bbc-segments.json')[0]%>", function(data) {
+              $.getJSON("/<%=Dir.glob(@input_directory+@uuid+'.mp3.bbc-segments.json')[0]%>", function(data) {
                 p2.segments.add(data);
                 //console.log(data.length);
                 });

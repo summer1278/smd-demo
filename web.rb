@@ -3,13 +3,14 @@ require 'sinatra'
 
 # Index Page
 get '/' do
-  @page_title = 'Radio lIST'
+  @page_title = 'Radio List'
   erb(:index) 
 end
 
 # Results page
 get '/item/:uuid' do
   @uuid = params['uuid']
+  @input_directory = './data/**/'
   erb(:result)
 end
 
