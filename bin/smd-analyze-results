@@ -8,12 +8,15 @@ require 'optparse'
 options = {}
 
 OptionParser.new do |opts|
-  opts.banner = "Usage: smd-import-audio [options]"
+  opts.banner = "Usage: smd-analyze-results [options]"
 
   opts.on("-i", "--input-dir [DIR]", "Input directory") do |i|
     options[:input_directory] = i
   end
 
+  opts.on("-w", "--window [DIR]", "window size") do |w|
+    options[:window] = w
+  end
 
   opts.on_tail("-h", "--help", "Show this message") do
     puts opts
@@ -22,5 +25,5 @@ OptionParser.new do |opts|
 
 end.parse!
 
-outputer = Smd::SumUpResults.new options[:input_directory]
+outputer = Smd::SumUpResults.new options[:input_directory],options[:window]
 outputer.sumUp
