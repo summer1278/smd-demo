@@ -65,7 +65,7 @@ end
 
 def generate_truth 
   #/data/speech/desert-island-discs-transcripts/
- Dir.glob('results/Ian_Bostridge_8f8460e3.csv') do |transcript|
+ Dir.glob('results/Betty_Driver_4c524fd7.csv') do |transcript|
   file = CSV.read(transcript)
   file_name =file[6][1] + '.truth.csv'
     if file_name.include?('.mp3')
@@ -105,7 +105,7 @@ def generate_truth
     end
    end
   #/data/speech/desert-island-discs/
-  CSV.open('results/new_truth/'+file_name, 'w') do |csv_file|
+  CSV.open('results/'+file_name, 'w') do |csv_file|
     segments.each {|row| csv_file<<row}
   end
 end
