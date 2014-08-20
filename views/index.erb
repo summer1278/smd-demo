@@ -18,8 +18,9 @@
   <h1><%= @page_title %></h1>
   <ul>
     <%require 'csv'%>
-    <%title = CSV.read(Dir.glob(@input_directory+@uuid+'.metadata.csv')[0]).first[0]%>
+    
     <% Dir.glob(@input_directory+'*.mp3') do |mp3_file| %>
+    <%title = CSV.read(Dir.glob(@input_directory+@uuid+'.metadata.csv')[0]).first[0]%>
     <%= "<li><a href='item/#{File.basename(mp3_file).gsub('.mp3','')}'>#{title}</a>  <a href='item/#{File.basename(mp3_file).gsub('.mp3','')}/ground-truth'>ground-truth</a>  <a href='item/#{File.basename(mp3_file).gsub('.mp3','')}/cfa'>cfa</a>  <a href='item/#{File.basename(mp3_file).gsub('.mp3','')}/zcr'>zcr</a></li>"%>
     <% end %>
   </ul>  
