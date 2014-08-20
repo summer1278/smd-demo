@@ -22,7 +22,7 @@
     <% Dir.glob(@input_directory+'*.mp3') do |mp3_file| %>
     <%uuid = File.basename(mp3_file).gsub('.mp3','')%>
     <%title = CSV.read(Dir.glob(@input_directory+uuid+'.metadata.csv')[0]).first[0]%>
-    <%= "<li><a href='item/#{uuid}'>#{title}</a>  <a href='item/#{uuid}/ground-truth'>ground-truth</a>  <a href='item/#{uuid}/cfa'>cfa</a>  <a href='item/#{uuid}/zcr'>zcr</a></li>"%>
+    <%= "<li><a href='item/#{uuid}'>#{title}</a>  [ <a href='item/#{uuid}/ground-truth'>ground-truth</a>  <a href='item/#{uuid}/cfa'>cfa</a>  <a href='item/#{uuid}/zcr'>zcr</a> ]</li>"%>
     <% end %>
   </ul>  
 </body>
