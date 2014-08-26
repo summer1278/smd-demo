@@ -25,7 +25,7 @@ module Smd
         end
         data[:startTime] = segment[0].to_f
         data[:endTime] = segment[1].to_f
-        data[:editable] = true
+        data[:editable] = false
         data[:color] = color
         data[:labelText] = "segment#{index}"
         list << data
