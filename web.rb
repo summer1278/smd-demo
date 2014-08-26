@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 
-input_directory = './data/**/'
+input_directory = './data/'
 
 # Index Page
 get '/' do
