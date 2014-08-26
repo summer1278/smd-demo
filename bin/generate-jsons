@@ -14,6 +14,10 @@ OptionParser.new do |opts|
     options[:input_directory] = i
   end
 
+  opts.on("-w", "--window [DIR]", "window size") do |w|
+    options[:window] = w
+  end
+
   opts.on_tail("-h", "--help", "Show this message") do
     puts opts
     exit
@@ -21,9 +25,10 @@ OptionParser.new do |opts|
 
 end.parse!
 Dir.glob(options[:input_directory]+'/**/*.cfa.csv') do |cfa_csv_file|
-  # header = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv', '.metadata.csv')).first
-  cfa_data = Smd::CfaData.new(File.open(cfa_csv_file).to_a, 2.2, 1024,512) #threshold = 2.2
+  
+  cfa_data = Smd::CfaData.new(File.open(cfa_csv_file).to_a, 2.2, options[:window],options[:window].to_f/2) #threshold = 2.2
   cfa_time = cfa_data.cfa_time
+  # header = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv', '.metadata.csv')).first
   # zcr_data = Smd::ZcrData.new(CSV.read(cfa_csv_file.gsub('.cfa.csv', '.bbc-segments.csv')).flatten.compact)
   # zcr_time = zcr_data.zcr_time(header[4].to_f)
   # truth_time = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv','.truth.csv'))
