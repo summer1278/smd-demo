@@ -48,6 +48,7 @@ feature_plans = [
   # { :nb_sum_frames => 50, :step_nb_sum_frames => 25}
 ]
 
+Parallel.map( input_files, :in_processes => 4 ) do
 Dir.glob(options[:input_directory] + "/**/*.{mp3,m4a}") do |mp3_file|
   feature_plans.each_with_index do |plan, i|
     dir = options[:output_directory]+ i.to_s
@@ -55,4 +56,5 @@ Dir.glob(options[:input_directory] + "/**/*.{mp3,m4a}") do |mp3_file|
     cfa = Smd::CfaProcessor.new( mp3_file, dir, plan )
     cfa.process
   end
+end
 end
