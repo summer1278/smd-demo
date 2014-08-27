@@ -1,11 +1,10 @@
 smd-demo
 ========
-Supported by UCL CS & BBC R&amp;D, MSc Project in 2014 Summer 
+SMD-DEMO is a Ruby command-line audio feature comparison application for ZCR and CFA that provides results analysis from imported audio file(either MP3 or M4A). For mixed audio(i.e. Speech and Music), it also provides a web-based visualization using Peaks.js developed by BBC R&amp;D (https://github.com/bbcrd/peaks.js). This is a MSc Project in 2014 Summer, supported by UCL CS & BBC R&amp;D.
 
-1. Visualization of speech music discriminator
-2. Gather results from a large dataset
-3. Pure music/speech: correctness percentage comparison
-4. Mixed music&speech: time boundary VS ground truth
+1. Import Audio
+2. Sum-up Results
+3. Visualize Results
 
 
 Json File Attributes
