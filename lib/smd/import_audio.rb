@@ -15,6 +15,7 @@ module Smd
 
     def import
       copy_mp3
+      generate_bbc_segments
       generate_cfa_data
       generate_waveform
       generate_metadata
@@ -23,7 +24,7 @@ module Smd
     end
 
     def generate_cfa_data
-      feature_plan =  'yaafe.py -r 11025 --resample'
+      feature_plan  = 'yaafe.py -r 11025 --resample'
       feature_plan += ' -f "cfa: SimpleNoiseGate>ContinuousFrequencyActivation '
       feature_plan += 'BinThreshold=10 NbPeaks=40>WindowConvolution WCLength=17" '
       feature_plan += '-p Metadata=False'
