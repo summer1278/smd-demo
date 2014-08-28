@@ -46,6 +46,7 @@ module Smd
           zcr_ds = zcr_mixed_data.boundary_search
           cfa_count = cfa_mixed_data.songs_count
           zcr_count = zcr_mixed_data.songs_count
+          #p cfa_mixed_data.music_weight
           header = (header << [cfa_percentage, zcr_percentage, cfa_ds, zcr_ds, cfa_count,zcr_count]).flatten
         end
         music_csv << header

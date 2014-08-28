@@ -58,10 +58,15 @@ module Smd
       #p sq_distance.reduce(0.0){ |sum, el| sum + el.to_f }.to_f
       return [missing_bound, wongly_inserted_bound, avg_distance]
     end
+
     def songs_count 
-      #p @segments
       @segments.select{|seg| seg[2]=="Music"}.size
     end
+
+    def music_weight
+      @ground_truth.collect{|seg| seg[1].to_f-seg[0].to_f if seg[2]=="Music"}.compact.inject(:+)/@duration
+    end
+
     def boundary_squared_distance(current, real)
       (current-real) ** 2
     end
