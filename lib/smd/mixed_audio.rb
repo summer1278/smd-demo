@@ -1,6 +1,6 @@
-#$: << 'lib'
+$: << 'lib'
 require 'csv'
-#require 'smd'
+require 'smd'
 
 module Smd
 
@@ -31,7 +31,7 @@ module Smd
 
     def boundary_search
       missing_bound = 0
-      slot = 2.0
+      slot = 10.0
       sq_distance = []
       unselected_seg = @segments
       @ground_truth.each do |boundary|
@@ -40,25 +40,26 @@ module Smd
         found = boundary_found(@segments, boundary[2], interval_start, interval_end)
         if found.empty?
           missing_bound += 1
-          #p boundary
+          #p missing_bound
         elsif found.size == 1 
           sq_distance << boundary_squared_distance(found.flatten[0].to_f, boundary[0].to_f)
-          unselected_seg.delete(found)
+          unselected_seg.delete(found.flatten)
           #p unselected_seg
         else
           sq_distance << found.collect{|seg| boundary_squared_distance(seg[0].to_f, boundary[0].to_f)}.min
           selected = found.select{|seg| boundary_squared_distance(seg[0].to_f, boundary[0].to_f)}.min
-          unselected_seg.delete(selected)
-          #p unselected_seg
+          unselected_seg.delete(selected.flatten)
         end
       end
-      avg_distance = (sq_distance.reduce(0.0){ |sum, el| sum + el.to_f }.to_f)**(1/2) / sq_distance.size
+      avg_distance = Math.sqrt(sq_distance.reduce(0.0){ |sum, el| sum + el.to_f }.to_f) / sq_distance.size
       wongly_inserted_bound = unselected_seg.size
       #p wongly_inserted_bound
-      #p missing_bound
+      #p sq_distance
       return [missing_bound, wongly_inserted_bound, avg_distance]
     end
-
+    def songs_count 
+      @segments.select{|seg| seg[2]=='Music'}.count
+    end
     def boundary_squared_distance(current, real)
       (current-real) ** 2
     end
@@ -78,11 +79,12 @@ module Smd
     end
 
   end
-  # file_name = 'results/2a27f3d0-f5e6-4417-a703-c8805e1728d8'
-  # cfa = CfaData.new(File.open(file_name+'.mp3.cfa.csv').to_a, 2.2,128,64)
-  # cfa_time = cfa.cfa_time
-  # zcr = ZcrData.new(CSV.read(file_name+'.mp3.bbc-segments.csv').flatten.compact)
-  # zcr_time = zcr.zcr_time(2148)
-  # ma = MixedAudio.new CSV.read(file_name+'.truth.csv'),cfa_time,2148
-  # ma.boundary_search
+   # file_name = 'results/946607e1-f2d2-49d4-ac3b-82dcbed7122e'
+   # cfa = CfaData.new(File.open(file_name+'.mp3.cfa.csv').to_a, 2.2,1024,512)
+   # cfa_time = cfa.cfa_time
+   # require 'pp'
+   #pp cfa_time
+   #p cfa_time.count
+   # ma = MixedAudio.new CSV.read(file_name+'.truth.csv'),cfa_time,2148
+   # p ma.boundary_search
 end

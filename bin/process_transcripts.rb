@@ -1,7 +1,6 @@
 require 'fileutils'
 require 'csv'
 require 'pp'
-require 'fileutils'
 
 def convert_csvs
   # remove spaces
@@ -65,7 +64,7 @@ end
 
 def generate_truth 
   #/data/speech/desert-island-discs-transcripts/
- Dir.glob('results/AC_Grayling_3ed469fd.csv') do |transcript|
+ Dir.glob('results/*.csv') do |transcript|
   file = CSV.read(transcript)
   file_name =file[6][1] + '.truth.csv'
     if file_name.include?('.mp3')
