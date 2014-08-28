@@ -33,7 +33,7 @@ module Smd
       missing_bound = 0
       slot = 10.0
       sq_distance = []
-      unselected_seg = @segments
+      unselected_seg = @segments.dup
       @ground_truth.each do |boundary|
         interval_start = ( ((boundary[0].to_f-slot) if boundary[0].to_f>slot) or 0.0 )
         interval_end = ( ((boundary[0].to_f+slot) if boundary[0].to_f+slot<@duration) or @duration )
@@ -58,7 +58,8 @@ module Smd
       return [missing_bound, wongly_inserted_bound, avg_distance]
     end
     def songs_count 
-      @segments.select{|seg| seg[2]=='Music'}.count
+      #p @segments
+      @segments.select{|seg| seg[2]=="Music"}.size
     end
     def boundary_squared_distance(current, real)
       (current-real) ** 2
@@ -82,9 +83,9 @@ module Smd
    # file_name = 'results/946607e1-f2d2-49d4-ac3b-82dcbed7122e'
    # cfa = CfaData.new(File.open(file_name+'.mp3.cfa.csv').to_a, 2.2,1024,512)
    # cfa_time = cfa.cfa_time
-   # require 'pp'
-   #pp cfa_time
-   #p cfa_time.count
+   #  require 'pp'
+   #  pp cfa_time
    # ma = MixedAudio.new CSV.read(file_name+'.truth.csv'),cfa_time,2148
    # p ma.boundary_search
+   # p ma.songs_count
 end
