@@ -44,17 +44,18 @@ module Smd
         elsif found.size == 1 
           sq_distance << boundary_squared_distance(found.flatten[0].to_f, boundary[0].to_f)
           unselected_seg.delete(found.flatten)
-          #p unselected_seg
+          #p sq_distance
         else
           sq_distance << found.collect{|seg| boundary_squared_distance(seg[0].to_f, boundary[0].to_f)}.min
           selected = found.select{|seg| boundary_squared_distance(seg[0].to_f, boundary[0].to_f)}.min
           unselected_seg.delete(selected.flatten)
         end
+        #p [interval_start ,interval_end]
       end
-      avg_distance = Math.sqrt(sq_distance.reduce(0.0){ |sum, el| sum + el.to_f }.to_f) / sq_distance.size
+      avg_distance = Math.sqrt(sq_distance.reduce(0.0){ |sum, el| sum + el.to_f }.to_f/ sq_distance.size)
       wongly_inserted_bound = unselected_seg.size
       #p wongly_inserted_bound
-      #p sq_distance
+      #p sq_distance.reduce(0.0){ |sum, el| sum + el.to_f }.to_f
       return [missing_bound, wongly_inserted_bound, avg_distance]
     end
     def songs_count 
@@ -84,8 +85,8 @@ module Smd
    # cfa = CfaData.new(File.open(file_name+'.mp3.cfa.csv').to_a, 2.2,1024,512)
    # cfa_time = cfa.cfa_time
    #  require 'pp'
-   #  pp cfa_time
+   # # pp cfa_time
    # ma = MixedAudio.new CSV.read(file_name+'.truth.csv'),cfa_time,2148
    # p ma.boundary_search
-   # p ma.songs_count
+   #ma.songs_count
 end
