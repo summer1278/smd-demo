@@ -34,6 +34,9 @@ module Smd
 
 end
 
+# $: << 'lib'
+# require 'smd'
+# require 'parallel'
 
 # feature_plans = [
 #   { :block_size => 512, :step_size => 256 },
@@ -46,10 +49,11 @@ end
 #   { :bin_threshold => 6.25 },
 # ]
 
-# input_files = Dir.glob('*.mp3')
+# input_files = Dir.glob('results/test3/*.mp3')
 
 # Parallel.map( input_files, :in_processes => 32 ) do
 #   feature_plans.each_with_index do |plan, i|
-#    CfaProcessor.new( 'test.mp3', 'results-' + i.to_s, feature_plan )
+#     p [plan,i]
+#    Smd::CfaProcessor.new( 'test.mp3', 'results-' + i.to_s, plan ).process
 #  end
 # end
