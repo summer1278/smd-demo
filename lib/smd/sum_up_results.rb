@@ -10,7 +10,7 @@ module Smd
 
     def sumUp
       collect_results
-      #combine_genre
+      combine_genre
     end
 
     def collect_results
