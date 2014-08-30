@@ -35,7 +35,7 @@ module Smd
   
   def cfa_time 
     total_segments = @data.size
-    time_slot = time_of_one_window(@window_size, 11025.0, 100.0, 50.0)
+    time_slot = time_of_one_block(@window_size, 11025.0, 100.0, 50.0)
     time_start_offset = time_slot * 0.25
     time_end_offset = time_slot * 0.25
     #p time_slot
@@ -90,7 +90,7 @@ module Smd
     window_size + ( num_frames - 1 ) * window_step_size
   end
 
-  def time_of_one_window (window_size, sample_rate, block_size, block_step_size)
+  def time_of_one_block (window_size, sample_rate, block_size, block_step_size)
     window_size / sample_rate  * block_size *(block_step_size/block_size)
   end
 
