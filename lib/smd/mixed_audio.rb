@@ -40,22 +40,17 @@ module Smd
         found = boundary_found(@segments, boundary[2], interval_start, interval_end)
         if found.empty?
           missing_bound += 1
-          #p missing_bound
         elsif found.size == 1 
           sq_distance << boundary_squared_distance(found.flatten[0].to_f, boundary[0].to_f)
           unselected_seg.delete(found.flatten)
-          #p sq_distance
         else
           sq_distance << found.collect{|seg| boundary_squared_distance(seg[0].to_f, boundary[0].to_f)}.min
           selected = found.select{|seg| boundary_squared_distance(seg[0].to_f, boundary[0].to_f)}.min
           unselected_seg.delete(selected.flatten)
         end
-        #p [interval_start ,interval_end]
       end
       avg_distance = Math.sqrt(sq_distance.reduce(0.0){ |sum, el| sum + el.to_f }.to_f/ sq_distance.size)
       wongly_inserted_bound = unselected_seg.size
-      #p wongly_inserted_bound
-      #p sq_distance.reduce(0.0){ |sum, el| sum + el.to_f }.to_f
       return [missing_bound, wongly_inserted_bound, avg_distance]
     end
 

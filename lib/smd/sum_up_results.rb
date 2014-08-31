@@ -25,7 +25,7 @@ module Smd
           cfa_percentage = cfa_data.cfa_percentage(header[2])
           zcr_percentage = zcr_data.zcr_percentage(header[2],header[4])
           header << cfa_percentage
-          header << zcr_percentage    
+          header << zcr_percentage   
         else
           cfa_time = cfa_data.cfa_time
           zcr_time = zcr_data.zcr_time(header[4].to_f)
@@ -118,10 +118,6 @@ module Smd
       end
       p seconds_to_days(sum_time)
     end
-  end
-
-  def combine_feature_plan
-    #test-features, change results to @result_directory
   end
 
   def seconds_to_hours( secs )

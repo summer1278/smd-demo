@@ -48,8 +48,8 @@ module Smd
       number   = classify(line.to_f)
       line_num = line_num + 1
 
-      num_frames   = num_frames_in_a_block( line_num, 100.0, 50.0 )
-      num_samples = num_samples_in_a_window( num_frames, @window_size, @window_step_size) 
+      num_windows = num_windows_in_a_block( line_num, 100.0, 50.0 )
+      num_samples = num_samples_in_a_block( num_windows, @window_size, @window_step_size) 
       time_in_sec = num_samples / 11025.0
       
       if number == 1
@@ -82,12 +82,12 @@ module Smd
     return segments
   end
 
-  def num_frames_in_a_block( num_blocks, block_size, block_step_size )
+  def num_windows_in_a_block( num_blocks, block_size, block_step_size )
     block_size + ( num_blocks - 1 ) * block_step_size
   end
 
-  def num_samples_in_a_window( num_frames, window_size, window_step_size )
-    window_size + ( num_frames - 1 ) * window_step_size
+  def num_samples_in_a_block( num_windows, window_size, window_step_size )
+    window_size + ( num_windows - 1 ) * window_step_size
   end
 
   def time_of_one_block (window_size, sample_rate, block_size, window_step_size)
