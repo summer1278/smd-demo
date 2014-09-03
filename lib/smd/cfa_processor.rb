@@ -53,7 +53,6 @@ end
 
 # Parallel.map( input_files, :in_processes => 32 ) do
 #   feature_plans.each_with_index do |plan, i|
-#     p [plan,i]
 #    Smd::CfaProcessor.new( 'test.mp3', 'results-' + i.to_s, plan ).process
 #  end
 # end

@@ -3,14 +3,16 @@ require 'parallel'
 module Smd
 
   class SumUpResults
-    def initialize( result_directory, window_size )
+    def initialize( result_directory, window_size, threshold )
       @result_directory = result_directory
       @window_size = window_size.to_f
+      @threshold = threshold.to_f
     end
 
     def sumUp
       collect_results
       combine_genre
+      combine_threshold_results
     end
 
     def collect_results
@@ -19,7 +21,7 @@ module Smd
        cfa_csv_files = Dir.glob(@result_directory+'/**/*.cfa.csv')
        Parallel.map(cfa_csv_files, :in_threads => 4 ) do |cfa_csv_file|
         header = CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv', '.metadata.csv')).first
-        cfa_data = CfaData.new(File.open(cfa_csv_file).to_a, 2.2, @window_size, @window_size/2.0) #threshold = 2.2
+        cfa_data = CfaData.new(File.open(cfa_csv_file).to_a, @threshold, @window_size, @window_size/2.0) #threshold = 2.2
         zcr_data = ZcrData.new(CSV.read(cfa_csv_file.gsub('.cfa.csv', '.bbc-segments.csv')).flatten.compact)
         if header[2] != 'MIXED'
           cfa_percentage = cfa_data.cfa_percentage(header[2])
@@ -27,23 +29,22 @@ module Smd
           header << cfa_percentage
           header << zcr_percentage   
         else
-          cfa_time = cfa_data.cfa_time
-          zcr_time = zcr_data.zcr_time(header[4].to_f)
+          cfa_time = cfa_data.cfa_time       
           cfa_mixed_data = MixedAudio.new(CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv','.truth.csv')),
             cfa_time, header[4])
+          cfa_percentage = cfa_mixed_data.boundary_correctness
+          cfa_ds = cfa_mixed_data.boundary_search
+          cfa_count = cfa_mixed_data.songs_count
+          zcr_time = zcr_data.zcr_time(header[4].to_f)
           zcr_mixed_data = MixedAudio.new(CSV.read(cfa_csv_file.gsub('.mp3.cfa.csv','.truth.csv')),
             zcr_time, header[4])
-          cfa_percentage = cfa_mixed_data.boundary_correctness
           zcr_percentage = zcr_mixed_data.boundary_correctness
-          cfa_ds = cfa_mixed_data.boundary_search
-          zcr_ds = zcr_mixed_data.boundary_search
-          cfa_count = cfa_mixed_data.songs_count
+          zcr_ds = zcr_mixed_data.boundary_search   
           zcr_count = zcr_mixed_data.songs_count
-          #p cfa_mixed_data.music_weight
           header = (header << [cfa_percentage, zcr_percentage, cfa_ds, zcr_ds, cfa_count,zcr_count]).flatten
         end
         list << header
-        sleep 1
+        sleep 0
       end
       #p list
     CSV.open(@result_directory+'/mp3_output.csv', 'w') do |music_csv|
@@ -61,7 +62,9 @@ module Smd
     results = CSV.read(@result_directory+'/mp3_output.csv',{:headers => true}) # array of arrays
     a = results.group_by {|e| e[3]}
     genres = a.keys
-    CSV.open(@result_directory+'/avg_mp3_output.csv', 'w') do |avg_csv|
+    dir = @result_directory+@threshold.to_s
+    FileUtils.mkdir_p dir
+    CSV.open(dir+'/avg_mp3_output.csv', 'w') do |avg_csv|
       avg_csv << ['Genre', 'AVG CFA correctness', 'AVG ZCR correctness',
         'AVG CFA missing','AVG CFA wrongly','AVG CFA distance',
         'AVG ZCR missing','AVG ZCR wrongly','AVG ZCR distance',
@@ -117,6 +120,27 @@ module Smd
           a[genre].size, seconds_to_hours(sum_genre_time),type]
       end
       p seconds_to_days(sum_time)
+    end
+  end
+
+  def combine_threshold_results
+    list = []
+    csv_files = Dir.glob(@result_directory+'/**/avg_mp3_output.csv')
+    Parallel.map(csv_files, :in_threads => 0) do |csv_file|
+      item = CSV.read(csv_file)[1]
+      dirname = File.dirname(csv_file)
+      p item
+      item << dirname
+      list << item
+    end
+    #p list
+    CSV.open(@result_directory+'/total.csv', 'w') do |avg_csv|
+      avg_csv << ['Genre', 'AVG CFA correctness', 'AVG ZCR correctness',
+        'AVG CFA missing','AVG CFA wrongly','AVG CFA distance',
+        'AVG ZCR missing','AVG ZCR wrongly','AVG ZCR distance',
+        'AVG CFA songs count', 'AVG ZCR songs count',
+        'Number of Tracks', 'Total duration', 'Type']
+      list.each{|row| avg_csv<<row}
     end
   end
 

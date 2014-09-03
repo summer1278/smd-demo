@@ -18,6 +18,8 @@ OptionParser.new do |opts|
     options[:window] = w
   end
 
+
+
   opts.on_tail("-h", "--help", "Show this message") do
     puts opts
     exit
@@ -25,5 +27,11 @@ OptionParser.new do |opts|
 
 end.parse!
 
-outputer = Smd::SumUpResults.new options[:input_directory],options[:window]
-outputer.sumUp
+
+# outputer = Smd::SumUpResults.new options[:input_directory],options[:window],0.75
+# outputer.sumUp
+thresholds = [2.2, 1.6, 1.15, 1.0, 0.85, 0.75]
+ thresholds.each do |threshold|
+  outputer = Smd::SumUpResults.new options[:input_directory],options[:window], threshold
+  outputer.sumUp
+end
