@@ -12,7 +12,7 @@ module Smd
     def sumUp
       collect_results
       combine_genre
-      combine_threshold_results
+      #combine_threshold_results
     end
 
     def collect_results
@@ -129,7 +129,6 @@ module Smd
     Parallel.map(csv_files, :in_threads => 0) do |csv_file|
       item = CSV.read(csv_file)[1]
       dirname = File.dirname(csv_file)
-      p item
       item << dirname
       list << item
     end
