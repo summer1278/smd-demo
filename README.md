@@ -1,9 +1,9 @@
 smd-demo
 ========
-SMD-DEMO is a Ruby command-line audio feature comparison application for ZCR and CFA that provides results analysis from imported audio file(either MP3 or M4A). For mixed audio(i.e. Speech and Music), it also provides a web-based visualization using Peaks.js developed by BBC R&amp;D (https://github.com/bbcrd/peaks.js). This is a MSc Project in 2014 Summer, supported by UCL CS & BBC R&amp;D.
+SMD-DEMO is a Ruby command-line audio feature evaluation framework for ZCR and CFA that provides results analysis from imported audio file(either MP3 or M4A). For mixed audio(i.e. Speech and Music), it also provides a web-based visualization using Peaks.js developed by BBC R&amp;D (https://github.com/bbcrd/peaks.js). This is a MSc Project in 2014 Summer, supported by UCL CS & BBC R&amp;D.
 
 1. Import Audio
-2. Sum-up Results
+2. Collect Results
 3. Visualize Results
 
 
@@ -16,41 +16,31 @@ Json File Attributes
 5. labelText: id of segment
 
 
-Feature Plan for YAAFE
-------------
-Featrue plans used in Ewald's experiments:
-```
-yaafe.py -r 11025 --resample -f "cfa_2.2: SimpleNoiseGate>ContinuousFrequencyActivation BinThreshold=10 NbPeaks=40>WindowConvolution WCLength=17>SimpleThresholdClassification STCThreshold=2.2" -p Metadata=False audio/test.mp3
-```
-for current example: cfa2.2 is best fit
+Working Platform
+----------
+Linux or Mac OS
 
-
-Taglib
+Dependency
 -----------
-Ruby binding C++ library for reading metadata from audio files
+Peak.js: Web-based audio visualization(https://github.com/bbcrd/peaks.js)
 
-Website: http://robinst.github.io/taglib-ruby/
+Taglib: Ruby binding C++ library for reading metadata from audio files(http:
+//robinst.github.io/taglib-ruby/)
 
-Install C++ complier and package
-```
-sudo apt-get install libtag1-dev
-```
-```
-sudo apt-get install gcc g++
-```
-```
-sudo gem install taglib-ruby
-```
+Parallel: Ruby library for parallel processing (https://github.com/grosser/
+parallel)
 
-BBC Segmenter
------------
-Based on Zero-Crossing Rate
+AVCONV: Fast Video and Audio Converter(http://manpages.ubuntu.com/manpages/
+precise/man1/avconv.1.html)
 
-Source Page: https://github.com/bbcrd/bbc-vamp-plugins/blob/master/src/SpeechMusicSegmenter.h
+SSConvert: Converter between various spreadsheet file formats (http://manpages.
+ubuntu.com/manpages/karmic/man1/ssconvert.1.html)
 
 
-Peaks.js
------------
-JavaScript UI for Audio Waveform
+Sinatra: Ruby domain-specific language for creating web applications(http://
+www.sinatrarb.com/intro.html)
 
-Project Page: https://github.com/bbcrd/peaks.js
+Get Started
+-------------
+Input Audio: MP3 or M4A
+
