@@ -24,21 +24,16 @@ Dependency
 -----------
 Peak.js: Web-based audio visualization(https://github.com/bbcrd/peaks.js)
 
-Taglib: Ruby binding C++ library for reading metadata from audio files(http:
-//robinst.github.io/taglib-ruby/)
+Taglib: Ruby binding C++ library for reading metadata from audio files(http://robinst.github.io/taglib-ruby/)
 
-Parallel: Ruby library for parallel processing (https://github.com/grosser/
-parallel)
+Parallel: Ruby library for parallel processing (https://github.com/grosser/parallel)
 
-AVCONV: Fast Video and Audio Converter(http://manpages.ubuntu.com/manpages/
-precise/man1/avconv.1.html)
+AVCONV: Fast Video and Audio Converter(http://manpages.ubuntu.com/manpages/precise/man1/avconv.1.html)
 
-SSConvert: Converter between various spreadsheet file formats (http://manpages.
-ubuntu.com/manpages/karmic/man1/ssconvert.1.html)
+SSConvert: Converter between various spreadsheet file formats(http://manpages.ubuntu.com/manpages/karmic/man1/ssconvert.1.html)
 
 
-Sinatra: Ruby domain-specific language for creating web applications(http://
-www.sinatrarb.com/intro.html)
+Sinatra: Ruby domain-specific language for creating web applications(http://www.sinatrarb.com/intro.html)
 
 Get Started
 -------------
